@@ -28,7 +28,7 @@ Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio
 
 To debug programs with Debugger for Mainframe you open the workspace in your IDE. Debugged files are temporarily saved in the workspace within the ``` .extrcs ``` folder.
 
-![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Setup%20and%20config%20Edited.gif)
+![](https://github.com/BroadcomMFD/debugger-for-mainframe/blob/1.0.1/Setup%20and%20config%20Edited.gif)
 
 **Follow these steps:**
 
