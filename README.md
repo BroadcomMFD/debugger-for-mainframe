@@ -124,7 +124,7 @@ Correctly defined breakpoints are marked by a red dot.
 Incorrectly defined breakpoints are marked by a grey dot or circle, with a summary error message indicating the cause of the error.
 
 ### Logpoints
-![](https://github.com/BroadcomMFD/debugger-for-mainframe/master/LogPoints.gif)
+![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/LogPoints.gif)
 
 Logpoints mark a particular part of the code, however unlike breakpoints, they do not break or stop the program. Logpoints can  highlight an issue within a program while it is running, without causing the program to terminate.
 
