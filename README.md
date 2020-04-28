@@ -28,6 +28,75 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 #### Client
 - Java version 8.0 or higher.
 
+### Set up Secure Connection to InterTest Server
+
+#### Prerequisites
+- InterTest server running and set up for secured communication.
+- Security certificate for the InterTest server.
+
+**Follow these steps**
+
+1. Extract the Server Certificate to your PC
+
+2. Import certificate with entry name ca11.lvn.broadcom.net to the trust store, for example:
+
+    *jdk1.8.0_181\jre\lib\security* named cacerts of the JRE under which Idas is running.
+
+3. Proceed using either Command Line, UI, or a Linux Subsystem:
+
+    - Using Command Line:
+    
+    Enter *sudo keytool -import -alias ca11.lvn.broadcom.net -file ca11.lvn.broadcom.net.cer -storetype JKS -keystore cacerts*
+
+    - Using KeystoreExplorer:
+        1. Open KeystoreExplorer, locate and open cacerts (pw: **changeit**)
+        2. Click the red gear icon on the toolbar to import the certificate to cacerts
+        3. Give the certificate an appropriate alias to ensure it is easily identified
+        
+    - Linux Subsystem
+        1. Verify java is installed: java -version
+        2. Locate your java directory: whereis java .
+        3. The output should be : java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz
+        4. Dig deeper : ls -l /usr/bin/java
+        5. The output should be: /etc/alternatives/java -> /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        6. Dig deeper : ls -l /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        7. The output should be : /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        8. Go into the jre directory : cd /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/
+        9. Import the certificate :
+        
+            sudo keytool -import -alias ca11.lvn.broadcom.net -file ca11.lvn.broadcom.net.cer -storetype JKS -keystore cacerts
+        
+4. Open VS Code and try to debug something while your launch.json looks like this:
+    
+        {
+                "type": "cbl",
+                
+                "request": "launch",
+                
+                "name": "Cobol Intertest CICS Debug",
+                
+                "programName": "COBDEMG",
+                
+                // "debugServer": 4712,
+                
+                "interTestHost": "ca11.lvn.broadcom.net",
+                
+                "interTestPort": 19468,
+                
+                "interTestUserName": "PMFID",
+                
+                "interTestSecure": true,
+                
+                "cicsApplId": "U11ICEUI"
+            }
+        
+Note: **interTestSecure": true** will display if Secure connection has been succesfully configured.
+
+**Troubleshooting:**
+- Make sure that you imported the certificate to the correct JRE's trust store
+- Make sure that the certificate you imported is the correct certificate.
+- Make sure that you saved your changes if you are using Keystore Explorer.
+
 ## Using Debugger for Mainframe
 
 To debug programs with Debugger for Mainframe you open the workspace in your IDE and configure your connection to CA InterTest using the file launch.json. Debugged files are temporarily saved in the workspace within the ``` .extrcs ``` folder.
