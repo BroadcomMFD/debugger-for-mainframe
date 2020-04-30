@@ -42,16 +42,18 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
     *jdk1.8.0_181\jre\lib\security* named cacerts of the JRE under which Idas is running.
 
-3. Proceed using either Command Line, UI, or a Linux Subsystem:
+3. Proceed using Command Line, UI, or a Linux Subsystem:
 
-    - Using Command Line:
+    - Command Line:
     
-    Enter *sudo keytool -import -alias ca11.lvn.broadcom.net -file ca11.lvn.broadcom.net.cer -storetype JKS -keystore cacerts*
+      Enter the following command:
+      
+         *sudo keytool -import -alias ca11.lvn.broadcom.net -file ca11.lvn.broadcom.net.cer -storetype JKS -keystore cacerts*
 
-    - Using KeystoreExplorer:
-        1. Open KeystoreExplorer, locate and open cacerts (pw: **changeit**)
-        2. Click the red gear icon on the toolbar to import the certificate to cacerts
-        3. Give the certificate an appropriate alias to ensure it is easily identified
+    - UI:
+        1. In your preferred UI, locate and open cacerts (pw: **changeit**)
+        2. Import the certificate to cacerts
+        3. Name the certificate with an appropriate alias to ensure it is easily identified
         
     - Linux Subsystem
         1. Verify java is installed: java -version
