@@ -38,17 +38,17 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
 1. Extract the Server Certificate to your PC
 
-2. Import certificate with entry name ca11.lvn.broadcom.net to the trust store, for example:
+2. Import certificate with entry name HOSTNAME to the trust store, for example:
 
-    *jdk1.8.0_181\jre\lib\security* named cacerts of the JRE under which Idas is running.
+    *jdk0.0.0_000\abc\Lib\security* named cacerts of the JRE under which Idas is running.
 
-3. Proceed using Command Line, UI, or a Linux Subsystem:
+3. Proceed using Command Line, or a UI Tool:
 
     - Command Line:
     
       Enter the following command:
       
-         *sudo keytool -import -alias ca11.lvn.broadcom.net -file ca11.lvn.broadcom.net.cer -storetype JKS -keystore cacerts*
+         *sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts*
 
     - UI:
         1. In your preferred UI, locate and open cacerts (pw: **changeit**)
@@ -66,7 +66,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
         8. Go into the jre directory : cd /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/
         9. Import the certificate :
         
-            sudo keytool -import -alias ca11.lvn.broadcom.net -file ca11.lvn.broadcom.net.cer -storetype JKS -keystore cacerts
+            sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts
         
 4. Open VS Code and try to debug something while your launch.json looks like this:
     
@@ -79,17 +79,17 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
                 
                 "programName": "COBDEMG",
                 
-                // "debugServer": 4712,
+                // "debugServer": "Server ID",
                 
-                "interTestHost": "ca11.lvn.broadcom.net",
+                "interTestHost": "HOST URL",
                 
-                "interTestPort": 19468,
+                "interTestPort": 12345,
                 
                 "interTestUserName": "PMFID",
                 
                 "interTestSecure": true,
                 
-                "cicsApplId": "U11ICEUI"
+                "cicsApplId": "CICSappID"
             }
         
 Note: **interTestSecure": true** will display if Secure connection has been succesfully configured.
@@ -97,7 +97,7 @@ Note: **interTestSecure": true** will display if Secure connection has been succ
 **Troubleshooting:**
 - Make sure that you imported the certificate to the correct JRE's trust store
 - Make sure that the certificate you imported is the correct certificate.
-- Make sure that you saved your changes if you are using Keystore Explorer.
+- Make sure that you saved your changes if you are using a UI to import the certificate.
 
 ## Using Debugger for Mainframe
 
