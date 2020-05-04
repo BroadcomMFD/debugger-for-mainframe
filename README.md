@@ -38,9 +38,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
 1. Download the Server Certificate to your local machine
 
-2. Import certificate with entry name HOSTNAME to the trust store, for example:
-
-    *jdk0.0.0_000\abc\Lib\security* named cacerts of the JRE under which the Debugger for Mainframe DA client is running.
+2. Import the certificate to the trust store of the JRE under which the Debugger for Mainframe DA client is running. Use the entry name HOSTNAME.
 
 3. Proceed using Command Line, or a UI Tool:
 
