@@ -38,22 +38,22 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
 1. Download the Server Certificate to your local machine
 
-2. Import the certificate to the trust store of the JRE under which the Debugger for Mainframe DA client is running. Use the entry name HOSTNAME.
+2. Import the certificate to the trust store of the JRE under which the Debugger for Mainframe DA client is running.
 
-3. Proceed using Command Line, or a UI Tool:
+3. Proceed using either Command Line, or a UI Tool:
 
-    - Command Line:
+    ##### Command Line:
     
       Enter the following command:
       
          `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
 
-    - UI:
+    ##### UI:
         1. In your preferred UI, locate and open **cacerts** with the password **changeit**.
         2. Import the certificate to cacerts.
         3. Name the certificate with an appropriate alias to ensure it is easily identified.
         
-    - Linux Subsystem
+    ##### Linux Subsystem
         1. Verify that Java is installed by running the command `java -version`.
         2. Locate your subsystem's java installation.
         3. Go to **/lib/security** to find **cacerts**.
