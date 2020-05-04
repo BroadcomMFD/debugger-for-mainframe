@@ -31,16 +31,16 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 ### Set up Secure Connection to InterTest Server
 
 #### Prerequisites
-- InterTest server running and set up for secured communication.
+- InterTest server running and configured to support secure communication.
 - Security certificate for the InterTest server.
 
 **Follow these steps**
 
-1. Extract the Server Certificate to your PC
+1. Download the Server Certificate to your PC
 
 2. Import certificate with entry name HOSTNAME to the trust store, for example:
 
-    *jdk0.0.0_000\abc\Lib\security* named cacerts of the JRE under which Idas is running.
+    *jdk0.0.0_000\abc\Lib\security* named cacerts of the JRE under which the Debugger for Mainframe DA client is running.
 
 3. Proceed using Command Line, or a UI Tool:
 
@@ -57,14 +57,9 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
         
     - Linux Subsystem
         1. Verify java is installed: java -version
-        2. Locate your java directory: whereis java .
-        3. The output should be : java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz
-        4. Dig deeper : ls -l /usr/bin/java
-        5. The output should be: /etc/alternatives/java -> /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-        6. Dig deeper : ls -l /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-        7. The output should be : /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-        8. Go into the jre directory : cd /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/
-        9. Import the certificate :
+        2. Locate your subsystem's java installation
+        3. Go to /lib/security to find **cacerts**
+        4. Import the certificate :
         
             sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts
         
@@ -77,7 +72,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
                 
                 "name": "Cobol Intertest CICS Debug",
                 
-                "programName": "COBDEMG",
+                "programName": "PROGNAME",
                 
                 // "debugServer": "Server ID",
                 
