@@ -50,6 +50,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
       1. In your preferred UI, locate and open **cacerts** with the password **changeit**.
       2. Import the certificate to cacerts.
       3. Name the certificate with an appropriate alias to ensure it is easily identified.
+      4. Save your changes.
         
     ##### Linux Subsystem
       1. Verify that Java is installed by running the command `java -version`.
@@ -68,7 +69,6 @@ You have activated secure data connection to InterTest for Debugger for Mainfram
 **Troubleshooting:**
 - Make sure that you imported the certificate to the correct JRE's trust store.
 - Make sure that the certificate you imported is the correct certificate.
-- Make sure that you saved your changes if you are using a UI to import the certificate.
 
 ## Using Debugger for Mainframe
 
