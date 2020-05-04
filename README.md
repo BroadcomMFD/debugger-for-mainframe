@@ -52,13 +52,13 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
       3. Name the certificate with an appropriate alias to ensure it is easily identified.
       4. Save your changes.
         
-    ##### Linux Subsystem
+    ##### Linux Subsystem:
       1. Verify that Java is installed by running the command `java -version`.
       2. Locate your subsystem's java installation.
       3. Go to **/lib/security** to find **cacerts**.
       4. Run the following command to import the certificate:
         
-            `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
+          `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
         
 3. Check that your launch.json includes **"interTestSecure": true**:
 
