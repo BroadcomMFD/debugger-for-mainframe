@@ -61,31 +61,11 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
         
             `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
         
-4. Open VS Code and try to debug something while your launch.json looks like this:
-    
-        {
-                "type": "cbl",
-                
-                "request": "launch",
-                
-                "name": "Cobol Intertest CICS Debug",
-                
-                "programName": "PROGNAME",
-                
-                // "debugServer": "Server ID",
-                
-                "interTestHost": "HOST URL",
-                
-                "interTestPort": 12345,
-                
-                "interTestUserName": "PMFID",
-                
-                "interTestSecure": true,
-                
-                "cicsApplId": "CICSappID"
-            }
-        
-Note: **interTestSecure": true** will display if Secure connection has been succesfully configured.
+4. Check that your launch.json includes **"interTestSecure": true**:
+
+5. Run a test debug session.
+
+You have activated secure data connection to InterTest for Debugger for Mainframe
 
 **Troubleshooting:**
 - Make sure that you imported the certificate to the correct JRE's trust store.
