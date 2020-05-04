@@ -59,9 +59,9 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
         
             `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
         
-4. Check that your launch.json includes **"interTestSecure": true**:
+3. Check that your launch.json includes **"interTestSecure": true**:
 
-5. Run a test debug session.
+4. Run a test debug session.
 
 You have activated secure data connection to InterTest for Debugger for Mainframe
 
