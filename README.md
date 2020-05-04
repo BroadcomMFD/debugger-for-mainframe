@@ -36,7 +36,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
 **Follow these steps**
 
-1. Download the Server Certificate to your PC
+1. Download the Server Certificate to your local machine
 
 2. Import certificate with entry name HOSTNAME to the trust store, for example:
 
@@ -48,20 +48,20 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
     
       Enter the following command:
       
-         *sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts*
+         `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
 
     - UI:
-        1. In your preferred UI, locate and open cacerts (pw: **changeit**)
-        2. Import the certificate to cacerts
-        3. Name the certificate with an appropriate alias to ensure it is easily identified
+        1. In your preferred UI, locate and open **cacerts** with the password **changeit**.
+        2. Import the certificate to cacerts.
+        3. Name the certificate with an appropriate alias to ensure it is easily identified.
         
     - Linux Subsystem
-        1. Verify java is installed: java -version
-        2. Locate your subsystem's java installation
-        3. Go to /lib/security to find **cacerts**
-        4. Import the certificate :
+        1. Verify that Java is installed by running the command `java -version`.
+        2. Locate your subsystem's java installation.
+        3. Go to **/lib/security** to find **cacerts**.
+        4. Run the following command to import the certificate:
         
-            sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts
+            `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
         
 4. Open VS Code and try to debug something while your launch.json looks like this:
     
@@ -90,7 +90,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 Note: **interTestSecure": true** will display if Secure connection has been succesfully configured.
 
 **Troubleshooting:**
-- Make sure that you imported the certificate to the correct JRE's trust store
+- Make sure that you imported the certificate to the correct JRE's trust store.
 - Make sure that the certificate you imported is the correct certificate.
 - Make sure that you saved your changes if you are using a UI to import the certificate.
 
