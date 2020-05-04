@@ -38,9 +38,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
 1. Download the Server Certificate to your local machine
 
-2. Import the certificate to the trust store of the JRE under which the Debugger for Mainframe DA client is running.
-
-3. Proceed using either Command Line, or a UI Tool:
+2. Import the certificate to the trust store of the JRE under which the Debugger for Mainframe DA client is running using either Command Line, or a UI Tool:
 
     ##### Command Line:
     
