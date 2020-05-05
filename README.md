@@ -21,7 +21,7 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 ### Prerequisites
 
 #### Server
-- CA InterTest for CICS, incremental release 11.0.07 or higher.
+- CA InterTest for CICS, incremental release 11.0.07 or higher
 - CICS region
 - [Testing Tools Server](http://techdocs.broadcom.com/content/broadcom/techdocs/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/installing/install-testing-tools-server.html)
 
