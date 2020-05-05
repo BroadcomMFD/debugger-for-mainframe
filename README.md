@@ -62,7 +62,7 @@ To set up a secure connection to InterTest, you import the server's security cer
 3. Run a test debug session with **"interTestSecure": true** in your launch.json file.  
    If the session fails, ensure that you imported the correct certificate to the correct JRE trust store and try again.
 
-You have activated secure data connection to InterTest for Debugger for Mainframe
+You have configured Debugger for Mainframe to use a secure connection to InterTest.
 
 ## Using Debugger for Mainframe
 
