@@ -28,15 +28,18 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 #### Client
 - Java version 8.0 or higher.
 
-### Set up Secure Connection to InterTest Server
+### Set up Secure Connection
 
-#### Prerequisites
-- InterTest server running and configured to support secure communication.
-- Security certificate for the InterTest server.
+To set up a secure connection to InterTest, you import the server's security certificate to the trust store of your JRE.
+
+#### Prerequisites:
+
+- Testing Tools Server configured to support a secure connection.
+- Server certificate for your Testing Tools Server.
 
 **Follow these steps**
 
-1. Download the Server Certificate to your local machine
+1. Download the server certificate to your local machine
 
 2. Import the certificate to the trust store of the JRE under which the Debugger for Mainframe DA client is running. Use either Command Line, or a UI Tool:
 
