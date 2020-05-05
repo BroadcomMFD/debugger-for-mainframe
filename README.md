@@ -45,12 +45,6 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
       Enter the following command:
       
          `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
-
-    ##### UI:
-      1. In your preferred UI, locate and open **cacerts** with the password **changeit**.
-      2. Import the certificate to cacerts.
-      3. Name the certificate with an appropriate alias to ensure it is easily identified.
-      4. Save your changes.
         
     ##### Linux Subsystem:
       1. Verify that Java is installed by running the command `java -version`.
@@ -59,16 +53,17 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
       4. Run the following command to import the certificate:
         
           `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
+          
+    ##### UI:
+      1. In your preferred UI, locate and open **cacerts** with the password **changeit**.
+      2. Import the certificate to cacerts.
+      3. Name the certificate with an appropriate alias to ensure it is easily identified.
+      4. Save your changes.
         
-3. Check that your launch.json includes **"interTestSecure": true**:
-
-4. Run a test debug session.
+3. Run a test debug session with **"interTestSecure": true** in your launch.json file.  
+   If the session fails, ensure that you imported the correct certificate to the correct JRE trust store and try again.
 
 You have activated secure data connection to InterTest for Debugger for Mainframe
-
-**Troubleshooting:**
-- Make sure that you imported the certificate to the correct JRE's trust store.
-- Make sure that the certificate you imported is the correct certificate.
 
 ## Using Debugger for Mainframe
 
@@ -104,7 +99,7 @@ To debug programs with Debugger for Mainframe you open the workspace in your IDE
     - **"interTestUserName"**:
         - Specifies your mainframe username.
     - **"interTestSecure"**:
-        - Secure server connections are not yet supported, so the only allowed value is 'false'.
+        - Specify "true" to use a secure connection to the InterTest server or "false" to use a non-secure connection.
     - **"cicsApplId"**:
         - Specifies the CICS Application ID (cicsApplID) of your CICS region.
 
