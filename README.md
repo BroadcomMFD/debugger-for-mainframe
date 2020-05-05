@@ -42,17 +42,13 @@ When upgrading to this version of Debugger for Mainframe from an older version, 
 
     ##### Command Line:
     
-      Enter the following command:
-      
-         `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
+      Enter the following command: `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
         
     ##### Linux Subsystem:
       1. Verify that Java is installed by running the command `java -version`.
       2. Locate your subsystem's java installation.
       3. Go to **/lib/security** to find **cacerts**.
-      4. Run the following command to import the certificate:
-        
-          `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
+      4. Run the following command to import the certificate: `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
           
     ##### UI:
       1. In your preferred UI, locate and open **cacerts** with the password **changeit**.
