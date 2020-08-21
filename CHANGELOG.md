@@ -2,6 +2,20 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.2.0] - 2020-08-20
+
+#### Added
+- Support for Batch debugging using CA InterTest Batch
+- Conversion of JCL to be used for Batch debugging
+- Support for non-UTF8 charsets
+- Holistic logging 
+
+#### Fixed
+- Dropdown list to choose a configuration no longer displays the same configuration twice.
+
+#### Changed
+- Readme update
+
 ## [1.1.0] - 2020-04-20
 
 #### Added
