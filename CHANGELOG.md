@@ -2,6 +2,16 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.3.0] - 2020-10-22
+
+#### Added
+- Support for debugging nested programs within programs
+- Support for the variable watch functionality
+
+#### Changed
+- Variables are now read by package instead of individually
+- Readme update
+
 ## [1.2.0] - 2020-08-20
 
 #### Added
