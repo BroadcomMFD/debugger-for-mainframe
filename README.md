@@ -10,9 +10,7 @@ Debugger for Mainframe provides a debugging interface for [CA InterTest™ for C
 
 > How can we improve Debugger for Mainframe? [Let us know on our Git repository](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
 
-Debugger for Mainframe is part of [Code4z](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack), an all-round package that offers a modern experience for mainframe application developers, including [HLASM Language Support](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.hlasm-language-support), [COBOL Language Support](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.cobol-language-support), [Explorer for Endevor](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.explorer-for-endevor) and [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) extensions.
-
-This extension is also supported on Eclipse Che as part of the [Che4z](https://github.com/eclipse/che-che4z) project.
+Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack), an all-round package that offers a modern experience for mainframe application developers, including [HLASM Language Support](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.hlasm-language-support), [COBOL Language Support](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.cobol-language-support), [Explorer for Endevor](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.explorer-for-endevor) and [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) extensions.
 
 ## Prerequisites
 
@@ -34,8 +32,6 @@ To debug CICS and Batch programs with Debugger for Mainframe you open the worksp
 Debugged files are temporarily saved in the workspace within the ```/.c4z/.extsrcs``` folder.
 
 To debug Batch programs, you also convert the JCL of your program into a new file which is used for debugging.
-
-**Note:** Debugger for Mainframe does not support multiple sessions running simultaneously on the same CICS region.
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Setup%20and%20config%20Edited.gif)
 
@@ -70,9 +66,8 @@ After you add your configuration, populate the following fields:
 - **"name":**
     - Specifies the name of the debugging session.
 - **"programName"**:
-    - Specifies the name of the program that you want to debug using this configuration.  
-    - To debug a CICS program, specify one value as a string. This value cannot exceed 8 characters.  
-    - To debug Batch programs, specify an array with either one value or multiple values separated by commas. If you specify multiple values, the first listed value which matches the name of a program in your JCL is debugged.
+    - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
+    - Specify an array with either one value or multiple values separated by commas.
 - **"protsym"**:
     - (Batch only) Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
 - **"interTestHost"**:
@@ -97,8 +92,12 @@ After you add your configuration, populate the following fields:
     - (Batch only) Specifies the DSN and member name where you want to store your converted JCL. Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL.
 - **"cicsApplId"**:
     - (CICS only) Specifies the CICS Application ID (cicsApplID) of your CICS region.
-- **"interTestCharset"**
+- **"cicsUserId"**:
+    - (CICS only, optional) Specify a CICS user logon ID to debug a CICS program or transaction as it executes for that specific ID. You cannot modify this value during an active debugging session.
+- **"interTestCharset"**:
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
+- **"paragraphBreakpoints"**:
+    - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph.
 
 ### Run a Debug Session
 
@@ -166,6 +165,10 @@ Correctly defined breakpoints are marked by a red dot.
 
 Incorrectly defined breakpoints are marked by a grey dot or circle, with a summary error message indicating the cause of the error.
 
+### Paragraph Breakpoints
+
+Set the `launch.json` parameter **paragraphBreakpoints** to "true" to trigger a breakpoint at the beginning of every new paragraph. You can also turn this feature on and off in the debugger console by submitting the commands `/AT LABEL` and `/LABEL OFF`.
+
 ### Logpoints
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/LogPoints.gif)
 
@@ -217,13 +220,7 @@ After you have imported your certificate, run a test debug session with **"inter
 
 You have configured Debugger for Mainframe to use a secure connection to InterTest.
 
-## Known Issues and Troubleshooting
-
-### Error: Monitor program invalid response
-**Reason**: An unexpected response from the server which might be caused by an existing monitor on a program.  
-**Action**: Fetch your extended source again. If the error persists, ensure the monitor on your program is turned off.
-
-### Enable Troubleshooting Log
+## Enable Troubleshooting Log
 To generate a troubleshooting log, add the following parameters to your `launch.json` file:
 
 - **"logLevel"**:

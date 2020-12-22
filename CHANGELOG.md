@@ -2,6 +2,20 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.4.0] - 2020-12-18
+
+#### Added
+- Paragraph breakpoints feature
+- Support for multiple-user sessions in CICS
+
+#### Changed
+- Readme update
+
+## [1.3.1] - 2020-11-04
+
+#### Changed
+- Changelog update
+
 ## [1.3.0] - 2020-10-22
 
 #### Added
