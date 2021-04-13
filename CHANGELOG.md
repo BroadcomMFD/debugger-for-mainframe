@@ -2,7 +2,15 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
-## [1.4.0] - 2020-12-18
+## [1.5.0] 2021-04-08
+
+#### Added
+- Statement trace and call trace features
+
+#### Changed
+- Readme update
+
+## [1.4.0] 2020-12-18
 
 #### Added
 - Paragraph breakpoints feature
@@ -11,12 +19,12 @@ All notable changes to the Debugger for Mainframe extension are documented in th
 #### Changed
 - Readme update
 
-## [1.3.1] - 2020-11-04
+## [1.3.1] 2020-11-04
 
 #### Changed
 - Changelog update
 
-## [1.3.0] - 2020-10-22
+## [1.3.0] 2020-10-22
 
 #### Added
 - Support for debugging nested programs within programs
@@ -26,7 +34,7 @@ All notable changes to the Debugger for Mainframe extension are documented in th
 - Variables are now read by package instead of individually
 - Readme update
 
-## [1.2.0] - 2020-08-20
+## [1.2.0] 2020-08-20
 
 #### Added
 - Support for Batch debugging using CA InterTest Batch

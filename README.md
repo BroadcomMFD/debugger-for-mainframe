@@ -1,7 +1,7 @@
 <div id="header" align="center">
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/BroadcomMFD/debugger-for-mainframe?style=flat-square)](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
-[![slack](https://img.shields.io/badge/chat-on%20Slack-blue?style=flat-square)](https://join.slack.com/t/che4z/shared_invite/enQtNzk0MzA4NDMzOTIwLWIzMjEwMjJlOGMxNmMyNzQ1NWZlMzkxNmQ3M2VkYWNjMmE0MGQ0MjIyZmY3MTdhZThkZDg3NGNhY2FmZTEwNzQ)
+[![slack](https://img.shields.io/badge/chat-on%20Slack-blue?style=flat-square)](https://communityinviter.com/apps/che4z/code4z)
 </div>
 
 # Debugger for Mainframe
@@ -24,6 +24,10 @@ Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio
 
 ### Secure Connection
 - Follow the instructions in the **[Set Up a Secure Connection](#set-up-secure-connection)** section below.
+
+### IDE
+
+Debugger for Mainframe is supported on Visual Studio Code and Eclipse Che.
 
 ## Using Debugger for Mainframe
 
@@ -98,6 +102,10 @@ After you add your configuration, populate the following fields:
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
 - **"paragraphBreakpoints"**:
     - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph.
+- **"callTrace"**:
+    - (Optional, CICS only) Specify "false" to disable the call trace feature. The feature is enabled by default.
+- **"statementTrace"**:
+    - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default.
 
 ### Run a Debug Session
 
@@ -134,6 +142,29 @@ After you define your configuration in `launch.json`, you can run your debug ses
 
 You have successfully initiated a debugging session. Once the session is running, the debugging session stops at each breakpoint, or if an abend occurs.
 
+### Call Trace and Statement Trace
+
+Debugger for Mainframe includes tracing features which send information about statements and programs to the left-hand sidebar of your IDE. There are two tracing features, call trace (for CICS programs only) and statement trace (for CICS and Batch programs).
+
+Call trace displays information about calls from program to program, displaying the logical flow between listings. You can view this information in the **Call Stack View** in the left-hand sidebar of your IDE.
+
+Statement trace displays information about the statements that you pass during your debug session. You can view this information in the **Statement Trace View** in the left-hand sidebar of your IDE. 
+
+You can click on an entry in the Call Stack or Statement Trace View to move the cursor to the relevant line of the COBOL file.
+
+Records displayed in both views contain the following information:
+
+* Name of the program
+* Number of the last statement processed
+* Text of the last statement processed
+
+The call trace and statement trace features are enabled by default. They can be disabled in `launch.json` before you begin your debug session. To disable or enable the tracing features during your debug session, use the following console commands:
+
+* `trace on`, `trace off`
+    - Enables and disables statement trace.
+* `calltrace on`, `calltrace off`
+    - Enables and disables call trace.
+       
 ### Conditional and Unconditional Breakpoints
 
 Breakpoints can be unconditional or conditional. Unconditional breakpoints always stop the process at the specified point until they are removed. Conditional breakpoints are only supported for CICS programs.
@@ -220,7 +251,16 @@ After you have imported your certificate, run a test debug session with **"inter
 
 You have configured Debugger for Mainframe to use a secure connection to InterTest.
 
-## Enable Troubleshooting Log
+## Troubleshooting
+
+### Known Issues
+
+The following issues are known and will be fixed in future releases:
+
+- In Eclipse Che, clicking an entry in the Call Stack or Statement Trace View does not move the cursor to the relevant line of the code.
+- In Eclipse Che, selecting a record from the Call Stack view does not update the variables correctly.
+
+### Enable Troubleshooting Log
 To generate a troubleshooting log, add the following parameters to your `launch.json` file:
 
 - **"logLevel"**:
@@ -239,3 +279,4 @@ To generate a troubleshooting log, add the following parameters to your `launch.
             - Displays the troubleshooting log on the IDE console.
         - "file"
             - Stores the troubleshooting log in a file in the `/.c4z` folder in your workspace.
+           
