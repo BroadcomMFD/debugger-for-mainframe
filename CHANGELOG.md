@@ -2,6 +2,11 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.5.1] 2021-09-17
+
+#### Fixed
+- Breakpoints in COBOL programs now work in other environments.
+
 ## [1.5.0] 2021-04-08
 
 #### Added
