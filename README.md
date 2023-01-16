@@ -6,16 +6,25 @@
 
 # Debugger for Mainframe
 
-Debugger for Mainframe provides a debugging interface for [CA InterTest™ for CICS](https://www.broadcom.com/products/mainframe/devops-app-development/testing-quality/intertest-cics) and [CA InterTest™ Batch](https://www.broadcom.com/products/mainframe/testing-and-quality/intertest-batch). This extension provides a modern debugging experience for CICS and Batch programs written in COBOL.
+Debugger for Mainframe provides a debugging interface for [InterTest™ for CICS](https://www.broadcom.com/products/mainframe/devops-app-development/testing-quality/intertest-cics) and [InterTest™ Batch](https://www.broadcom.com/products/mainframe/testing-and-quality/intertest-batch). This extension provides a modern debugging experience for CICS and Batch programs written in COBOL and High-Level Assembler Language (HLASM).
 
 > How can we improve Debugger for Mainframe? [Let us know on our Git repository](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
 
-Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack), an all-round package that offers a modern experience for mainframe application developers, including [HLASM Language Support](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.hlasm-language-support), [COBOL Language Support](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.cobol-language-support), [Explorer for Endevor](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.explorer-for-endevor) and [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) extensions.
+Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack), an all-round package that offers a modern experience for mainframe application developers, including extensions for language support, data editing, testing, and source code management.
+
+## Compatibility
+
+Debugger for Mainframe is supported on Visual Studio Code and Github Codespaces.
+
+We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) to access mainframe data sets in connection with your debugging sessions. Zowe Explorer is available as part of the Code4z package.
+
+<a href="https://www.openmainframeproject.org/all-projects/zowe/conformance"><img alt="This extension is Zowe v2 conformant" src="https://artwork.openmainframeproject.org/other/zowe-conformant/zowev2/explorer/color/zowe-conformant-zowev2-explorer-color.png" width=20% height=20% /></a>
 
 ## Prerequisites
 
 ### Server
-- CA InterTest for CICS and/or CA InterTest Batch, incremental release 11.0.07 or higher.
+- InterTest for CICS and/or InterTest Batch, incremental release 11.0.07 or higher.
+- Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, and LU08307.
 - [Testing Tools Server](http://techdocs.broadcom.com/content/broadcom/techdocs/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/installing/install-testing-tools-server.html)
     - To use Debugger for Mainframe to debug CICS programs, ensure that you complete the tasks in the sections "Activation of the IP CICS Sockets" and "Set Up an IRC Connection" on the linked page when you configure your Testing Tools Server instance.
 
@@ -27,17 +36,19 @@ Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio
 
 ### IDE
 
-Debugger for Mainframe is supported on Visual Studio Code and Eclipse Che.
+Debugger for Mainframe is supported on Visual Studio Code version 1.67.0 and above.
 
 ## Using Debugger for Mainframe
 
-To debug CICS and Batch programs with Debugger for Mainframe you open the workspace in your IDE and configure your connection to CA InterTest using the file `launch.json`. 
+To debug CICS and Batch programs with Debugger for Mainframe you open the workspace in your IDE and configure your connection to InterTest using the file `launch.json`. 
 
 Debugged files are temporarily saved in the workspace within the ```/.c4z/.extsrcs``` folder.
 
 To debug Batch programs, you also convert the JCL of your program into a new file which is used for debugging.
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Setup%20and%20config%20Edited.gif)
+
+See [this video](https://www.youtube.com/watch?v=f6ZxwALSb_Y&ab_channel=Educate) for a step-by-step walkthrough of CICS debugging using Debugger for Mainframe.
 
 ### Getting Started
 
@@ -53,13 +64,13 @@ To start debugging programs in your IDE, you first create a `launch.json` file w
 3. In the sidebar, click **create a launch.json file**.  
    A list of configurations displays. 
    
-4. Select either **Debugger for Mainframe: CA INTERTEST™ FOR CICS** or **Debugger for Mainframe: CA INTERTEST™ BATCH**
+4. Select either **Debugger for Mainframe: INTERTEST™ FOR CICS** or **Debugger for Mainframe: INTERTEST™ BATCH**
 
 5. Fill in the necessary fields as described in the **[Add Configuration](#add-configuration)** section below.
 
 ### Add Configuration
 
-The `launch.json` file contains configurations for debugging different types of programs. The configurations supported by Debugger for Mainframe are **Debugger for Mainframe: CA INTERTEST™ FOR CICS** and **Debugger for Mainframe: CA INTERTEST™ BATCH**. 
+The `launch.json` file contains configurations for debugging different types of programs. The configurations supported by Debugger for Mainframe are **Debugger for Mainframe: INTERTEST™ FOR CICS** and **Debugger for Mainframe: INTERTEST™ BATCH**. 
 
 When you create a `launch.json` file for the first time, a configuration is added. You can add more configurations by clicking the **Add configuration** button.
 
@@ -101,11 +112,13 @@ After you add your configuration, populate the following fields:
 - **"interTestCharset"**:
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
 - **"paragraphBreakpoints"**:
-    - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph.
+    - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph or label. For more information, see [Paragraph Breakpoints](#paragraph-breakpoints).
 - **"callTrace"**:
-    - (Optional, CICS only) Specify "false" to disable the call trace feature. The feature is enabled by default.
+    - (CICS only, optional) Specify "false" to disable the call trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
 - **"statementTrace"**:
-    - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default.
+    - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
+- **"executionCounts"**:
+    - (Batch only, optional) Specify "true" to enable the execution counts feature. The feature is disabled by default. For more information, see [Execution Counts](#execution-counts).
 
 ### Run a Debug Session
 
@@ -121,7 +134,7 @@ After you define your configuration in `launch.json`, you can run your debug ses
     - This auto-populates as you type, so the required source might appear before you type the full source name.
 
 4. Select the required source, for example:
-    - ``` CA INTERTEST™ FOR CICS ```
+    - ``` INTERTEST™ FOR CICS ```
 
 5. Enter your password.
     - The expanded source is displayed.
@@ -140,7 +153,9 @@ After you define your configuration in `launch.json`, you can run your debug ses
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Breakpoints.gif)
 
-You have successfully initiated a debugging session. Once the session is running, the debugging session stops at each breakpoint, or if an abend occurs.
+You have successfully initiated a debugging session.   
+Once the session is running, the debugging session stops at each breakpoint, or if an abend occurs.  
+You can use the **Continue** and **Step over** functions of the IDE debugging controller. The **Step into**, **Step out** and **Restart** functions are not currently supported.
 
 ### Call Trace and Statement Trace
 
@@ -150,7 +165,7 @@ Call trace displays information about calls from program to program, displaying 
 
 Statement trace displays information about the statements that you pass during your debug session. You can view this information in the **Statement Trace View** in the left-hand sidebar of your IDE. 
 
-You can click on an entry in the Call Stack or Statement Trace View to move the cursor to the relevant line of the COBOL file.
+You can click on an entry in the Call Stack or Statement Trace View to move the cursor to the relevant line of the source code file.
 
 Records displayed in both views contain the following information:
 
@@ -158,16 +173,18 @@ Records displayed in both views contain the following information:
 * Number of the last statement processed
 * Text of the last statement processed
 
-The call trace and statement trace features are enabled by default. They can be disabled in `launch.json` before you begin your debug session. To disable or enable the tracing features during your debug session, use the following console commands:
+The call trace and statement trace features are enabled by default. They can be disabled in `launch.json` before you begin your debug session. For more information, see [Add Configuration](#add-configuration).
 
-* `trace on`, `trace off`
+To disable or enable the tracing features during your debug session, use the following commands in the debug console:
+
+* `/trace on`, `/trace off`
     - Enables and disables statement trace.
-* `calltrace on`, `calltrace off`
+* `/calltrace on`, `/calltrace off`
     - Enables and disables call trace.
        
 ### Conditional and Unconditional Breakpoints
 
-Breakpoints can be unconditional or conditional. Unconditional breakpoints always stop the process at the specified point until they are removed. Conditional breakpoints are only supported for CICS programs.
+Breakpoints can be unconditional or conditional. Unconditional breakpoints always stop the process at the specified point until they are removed.
         
 Conditional breakpoints contain specified scenarios which trigger the breakpoint, and are formatted as follows:
         
@@ -198,7 +215,9 @@ Incorrectly defined breakpoints are marked by a grey dot or circle, with a summa
 
 ### Paragraph Breakpoints
 
-Set the `launch.json` parameter **paragraphBreakpoints** to "true" to trigger a breakpoint at the beginning of every new paragraph. You can also turn this feature on and off in the debugger console by submitting the commands `/AT LABEL` and `/LABEL OFF`.
+Set the `launch.json` parameter **paragraphBreakpoints** to "true" to trigger a breakpoint at the beginning of every new paragraph in COBOL code, and every label in Assembler code. For more information, see [Add Configuration](#add-configuration).
+
+You can also turn this feature on and off in the debugger console by submitting the commands `/AT LABEL` and `/LABEL OFF`.
 
 ### Logpoints
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/LogPoints.gif)
@@ -218,6 +237,18 @@ Logpoints are especially useful as:
 - They allow live analysis while users continue to use functionaility, minimizing costly downtime.
 - Logpoints can be added on an ad-hoc basis, with no need to pre-plan, so debugging can be done flexibly according to resource availability.
 - Logpoint notes are separate from source code, and require minimal clean-up after debugging is completed. 
+
+### Execution Counts
+
+Debugger for Mainframe includes an execution count feature which states how many times each line of code is run between each breakpoint or abend in your debugging session. The execution count feature is only supported for Batch programs.
+
+The execution count feature is disabled by default. It can be enabled in `launch.json` before you begin your debug session. For more information, see [Add Configuration](#add-configuration).
+
+To enable or disable the execution count feature during your debug session, use the debug console commands `/counts on` and `/counts off`. After you submit the `/counts on` command, perform an action which progresses the debugging session to display the execution count.
+
+The execution count variable is stored on the mainframe and is only reset when you perform an action which progresses the debugging session. It is not reset by the `/counts off` command or by closing Visual Studio Code.
+
+**Note:** The execution count appears in column 80 of the editor window. Ensure that your IDE window is wide enough to see it.
 
 ## Set up Secure Connection
 
@@ -257,8 +288,7 @@ You have configured Debugger for Mainframe to use a secure connection to InterTe
 
 The following issues are known and will be fixed in future releases:
 
-- In Eclipse Che, clicking an entry in the Call Stack or Statement Trace View does not move the cursor to the relevant line of the code.
-- In Eclipse Che, selecting a record from the Call Stack view does not update the variables correctly.
+- Conditional breakpoints validator does not work on VS Code version 1.74.
 
 ### Enable Troubleshooting Log
 To generate a troubleshooting log, add the following parameters to your `launch.json` file:
@@ -280,3 +310,19 @@ To generate a troubleshooting log, add the following parameters to your `launch.
         - "file"
             - Stores the troubleshooting log in a file in the `/.c4z` folder in your workspace.
            
+## Technical Assistance and Support for Debugger for Mainframe
+
+The Debugger for Mainframe extension is made available to customers on the Visual Studio Code Marketplace in accordance with the terms and conditions contained in the provided End-User License Agreement (EULA).
+
+If you are on active support for InterTest, you get technical assistance and support in accordance with the terms, guidelines, details, and parameters that are located within the Broadcom [Working with Support](https://support.broadcom.com/external/content/release-announcements/CA-Support-Policies/6933) guide.
+
+This support generally includes:
+
+* Telephone and online access to technical support
+* Ability to submit new incidents 24x7x365
+* 24x7x365 continuous support for Severity 1 incidents
+* 24x7x365 access to Broadcom Support
+* Interactive remote diagnostic support
+* Technical support cases must be submitted to Broadcom in accordance with guidance provided in “Working with Support”.
+
+Note: To receive technical assistance and support, you must remain compliant with “Working with Support”, be current on all applicable licensing and maintenance requirements, and maintain an environment in which all computer hardware, operating systems, and third party software associated with the affected Broadcom software are on the releases and version levels from the manufacturer that Broadcom designates as compatible with the software. Changes you elect to make to your operating environment could detrimentally affect the performance of Broadcom software and Broadcom shall not be responsible for these effects or any resulting degradation in performance of the Broadcom software. Severity 1 cases must be opened via telephone and elevations of lower severity incidents to Severity 1 status must be requested via telephone.
