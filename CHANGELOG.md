@@ -2,6 +2,54 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.7.0] 2023-01-13
+
+#### Added
+- High-Level Assembler Language support
+- Full support for conditional breakpoints (validator currently not supported on VS Code version 1.74)
+- Support for label breakpoints in Assembler code
+
+#### Changed
+- Variable enhancements
+- Readme update
+
+## [1.6.1] 2022-10-26
+
+#### Changed
+- Readme update
+
+#### Fixed
+- Issue with insufficient websocket buffer
+- Compatibility with extensions which contribute languages
+
+## [1.6.0] 2022-06-30
+
+#### Added
+- Execution counts feature
+
+#### Changed
+- Readme update
+
+## [1.5.4] 2022-06-07
+
+#### Fixed
+- Issue when using multiple PROTSYMs
+- Notify user when unsupported debug action is used
+
+## [1.5.3] 2022-05-17
+
+#### Changed
+- Readme update
+
+## [1.5.2] 2022-05-16
+
+#### Changed
+- Readme update
+
+#### Fixed
+- Support for Java 17
+- Minor bugfixes
+
 ## [1.5.1] 2021-09-17
 
 #### Fixed
