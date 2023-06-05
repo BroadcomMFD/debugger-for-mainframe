@@ -16,7 +16,7 @@ Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio
 
 Debugger for Mainframe is supported on Visual Studio Code and Github Codespaces.
 
-We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) to access mainframe data sets in connection with your debugging sessions. Zowe Explorer is available as part of the Code4z package.
+We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) to access mainframe data sets in connection with your debugging sessions. You can use Zowe Explorer to submit JCL or to edit your converted JCL before running batch debugging sessions. Zowe Explorer is available as part of the Code4z package.
 
 <a href="https://www.openmainframeproject.org/all-projects/zowe/conformance"><img alt="This extension is Zowe v2 conformant" src="https://artwork.openmainframeproject.org/other/zowe-conformant/zowev2/explorer/color/zowe-conformant-zowev2-explorer-color.png" width=20% height=20% /></a>
 
@@ -38,6 +38,84 @@ We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/ite
 
 Debugger for Mainframe is supported on Visual Studio Code version 1.67.0 and above.
 
+## Getting Started
+
+Debugger for Mainframe includes two walkthroughs to help you become acquainted with key features of the extension. To access the walkthroughs, select **Welcome** from the **Help** menu, and select from the options under **Walkthroughs** - **More...**
+
+The buttons in these walkthroughs run commands which can otherwise be found in the F1 menu. 
+
+### Get Started with CICS Debugging
+
+The **Get Started with CICS Debugging** walkthrough guides you through the steps required to set up and run a basic CICS debugging session. If you do not have a CICS program to run, you can use the [Basic COBOL Demo Session](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/getting-started/ca-intertest-for-cics-primers/cobol-primer/cobol-basic-demo-session.html) which comes shipped with InterTest for CICS.
+
+### Basic Batch Demo Session
+
+The **Basic Batch Demo Session** walkthrough guides you through the [Basic Batch Link Demo](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/getting-started/ca-intertest-batch-demo-sessions/basic-batch-link-demo.html) which comes shipped with InterTest Batch. 
+
+The demo program, CAMRCOBB, is in the data set CAI.CAVHSAMP. Note that CAI is the default high-level qualifier, and it can be changed during installation, so on your instance of InterTest the HLQ might be different.
+
+Before you run the Basic Batch Demo Session on Debugger for Mainframe, complete the following tasks:
+1. Allocate a PROTSYM.
+2. Allocate a LOADLIB.
+3. Compile CAMRCOBB and link it to the PROTSYM and LOADLIB.
+4. Locate the step in the demo JCL that runs CAMRCOBB and change the STEPLIB to refer to your LOADLIB. The demo JCL can be found in CAVHJCL(DEMOJCL).
+
+#### Basic Batch Demo Configuration
+
+During the demo session, you are instructed to fill in a `launch.json` file with details of your Testing Tools Server and the program that you want to run. Ensure that you add the following parameter, which is not included by default, between `"interTestSecure"` and `"convertedJCL"`:
+
+````
+"originalJCL": {
+                "inDSN": "",
+                "stepName": ""
+            },
+````
+
+After you add this optional parameter, the full empty configuration displays as follows:
+
+````
+{
+            "name": "Debugger for Mainframe: INTERTEST™ FOR BATCH",
+            "type": "intertest-batch",
+            "request": "launch",
+            "programName": [
+                "PROGNAME"
+            ],
+            "protsym": [
+                "PROTSYM"
+            ],
+            "interTestHost": "HOST",
+            "interTestPort": 0,
+            "interTestUserName": "USER",
+            "interTestSecure": true,
+            "originalJCL": {
+                "inDSN": "",
+                "stepName": ""
+            },
+            "convertedJCL": ""
+        }
+````
+
+Populate the fields as follows:
+- **"programName":**
+   - Replace PROGNAME with CAMRCOBB.
+- **"protsym":**
+   - Replace PROTSYM with the DSN of the PROTSYM that you linked to CAMRCOBB.
+- **"interTestHost":**
+   - Replace HOST with the address of your Testing Tools Server.
+- **"interTestPort":**
+   - Specify the port of your Testing Tools Server.
+- **"interTestUser":**
+   - Replace USER with your mainframe username.
+- **"interTestSecure":**
+   - Change this to **false** unless you are using a secure connection. Using a secure connection requires extra configuration steps on both the client and the server side. For more information, see **[Set Up a Secure Connection](#set-up-secure-connection)**.
+- **"inDSN":**
+   - Specify the data set and member name of your demo JCL, e.g. *yourHLQ*.CAVHJCL(DEMOJCL).
+- **stepName":**
+   - Specify the name of the step which launches CAMRCOBB, e.g. STEP1.
+- **"convertedJCL":**
+   - Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL. For this demo session, we recommend that you create a new member in the same data set where your demo JCL is stored, e.g. *yourHLQ*.CAVHJCL(CONVJCL).
+
 ## Using Debugger for Mainframe
 
 To debug CICS and Batch programs with Debugger for Mainframe you open the workspace in your IDE and configure your connection to InterTest using the file `launch.json`. 
@@ -50,7 +128,7 @@ To debug Batch programs, you also convert the JCL of your program into a new fil
 
 See [this video](https://www.youtube.com/watch?v=f6ZxwALSb_Y&ab_channel=Educate) for a step-by-step walkthrough of CICS debugging using Debugger for Mainframe.
 
-### Getting Started
+### Create a Configuration File
 
 To start debugging programs in your IDE, you first create a `launch.json` file within your workspace.
 
@@ -70,21 +148,33 @@ To start debugging programs in your IDE, you first create a `launch.json` file w
 
 ### Add Configuration
 
-The `launch.json` file contains configurations for debugging different types of programs. The configurations supported by Debugger for Mainframe are **Debugger for Mainframe: INTERTEST™ FOR CICS** and **Debugger for Mainframe: INTERTEST™ BATCH**. 
+The `launch.json` file contains configurations for debugging different types of programs. The configurations supported by Debugger for Mainframe are: 
+* **Debugger for Mainframe: INTERTEST™ FOR CICS**  
+  Basic configuration for CICS programs.
+* **Debugger for Mainframe: INTERTEST™ BATCH**  
+  Basic configuration for Batch programs.
+* **Debugger for Mainframe: INTERTEST™ BATCH - Attach**  
+  Configuration to attach Batch programs to the Batch Link Queue.
 
-When you create a `launch.json` file for the first time, a configuration is added. You can add more configurations by clicking the **Add configuration** button.
+When you create a `launch.json` file for the first time, a configuration is added. Click the **Add configuration** button in the configuration drop-down list to add further configurations.
 
 After you add your configuration, populate the following fields:
 
 - **"type":**
     - Specify "intertest-cics" or "intertest-batch".
+    - If you use the "Add configuration" button, this parameter is filled automatically.
+- **"request":**
+    - Specify "attach" if this is a Batch Link Queue configuration (see [Enable the Batch Link Queue](#enable-the-batch-link-queue) below), otherwise specify "launch".
+    - If you use the "Add configuration" button, this parameter is filled automatically.
 - **"name":**
     - Specifies the name of the debugging session.
 - **"programName"**:
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
     - Specify an array with either one value or multiple values separated by commas.
+    - In an `attach` configuration, this parameter is optional.
 - **"protsym"**:
     - (Batch only) Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+    - In an `attach` configuration, this parameter is optional.
 - **"interTestHost"**:
     - Specifies the host address of your Testing Tools Server instance.
 - **"interTestPort"**:
@@ -117,14 +207,28 @@ After you add your configuration, populate the following fields:
     - (CICS only, optional) Specify "false" to disable the call trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
 - **"statementTrace"**:
     - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
+    - **Note**: If you disable this parameter for a CICS session, the "step out" and "step over" functions of the debug toolbar are also disabled.
 - **"executionCounts"**:
     - (Batch only, optional) Specify "true" to enable the execution counts feature. The feature is disabled by default. For more information, see [Execution Counts](#execution-counts).
+
+#### Enable the Batch Link Queue
+
+Enable the Batch Link Queue to add the Suspend and Attach functionalities to your Batch debugging experience. These functionalities allow you to suspend and later resume a debugging session, for example:
+
+* If you need to run two debugging sessions simultaneously and switch between them.
+* If you want to start a debugging session on InterTest Batch or the InterTest Batch Eclipse User Interface, and resume it on Debugger for Mainframe.
+
+To enable the Batch Link Queue you add a new configuration to your existing `launch.json` file, which must already contain at least one `intertest-batch` configuration.
+
+1. On the run and debug tab, click the down arrow on the list of configurations in the top-left corner.
+2. Select **Add Configuration**
+3. From the drop-down list, select **Debugger for Mainframe: INTERTEST™ BATCH - Attach**  
+   The `launch.json` file opens, containing a new `intertest-batch` configuration with the parameter `request: "attach"`.
+4. Populate all fields in the new configuration (see the **[Add Configuration](#add-configuration)** section above for instructions).  
 
 ### Run a Debug Session
 
 After you define your configuration in `launch.json`, you can run your debug session in the debugging interface.
-
-**Follow these steps:**
 
 1. Press F1 to open the interface.
 
@@ -154,8 +258,58 @@ After you define your configuration in `launch.json`, you can run your debug ses
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Breakpoints.gif)
 
 You have successfully initiated a debugging session.   
-Once the session is running, the debugging session stops at each breakpoint, or if an abend occurs.  
-You can use the **Continue** and **Step over** functions of the IDE debugging controller. The **Step into**, **Step out** and **Restart** functions are not currently supported.
+
+- Once the session is running, the debugging session stops at each breakpoint, or if an abend occurs.  
+- You can use the **Continue**, **Step over**, **Step into** and **Step out** functions of the IDE Debug Toolbar. The **Restart** function is not supported. 
+- To use the **Step over** and **Step out** functions during a CICS session, ensure that you enable statement trace in your `launch.json` file.
+- Use the **Stop** button to terminate the debugging session. If you have a Batch Link Queue (`attach`) configuration in your `launch.json` file, you can use the drop-down arrow to switch between the **Stop** and the **Suspend** buttons. Use the **Suspend** button to temporarily terminate a debug session and add it to the Batch Link Queue, from which you can resume it later.
+
+### Run a Debug Session From the Batch Link Queue
+
+To run a debug session from the Batch Link Queue, ensure that you have an `attach` configuration in your `launch.json` file (see [Enable the Batch Link Queue](#enable-the-batch-link-queue) for more information.)
+
+1. Select an `attach` configuration from the list of configurations on the Run and Debug panel.
+2. Enter your mainframe password
+3. Select the session that you want to resume from the drop-down list
+   The listing is downloaded and the debugging session starts.
+
+When you run a debug session using an `attach` configuration, the **Suspend** button is shown by default in the Debug Toolbar. Use the drop-down arrow to switch to the **Stop** button.
+
+When you suspend a debug session, breakpoints that you define in Visual Studio Code are saved with the session. If you load a debug session from the Batch Link Queue that has breakpoints saved, these breakpoints override ones that are defined locally on the same lines.
+
+### Manage DB2 and IMS Stored Procedures
+
+You can use Debugger for Mainframe to schedule and delete DB2 and IMS stored procedures. 
+
+To manage stored procedures, ensure that you have a batch `launch` or `attach` configuration containing your Testing Tools Server host and port and your mainframe username. You can leave the `programName` and `protsym` fields in this configuration at their default values.
+
+#### Schedule a DB2 or IMS Stored Procedure
+
+To schedule stored procedures, you add the session to the Stored Procedure Table, from which you can later run it from the Batch Link Queue using an `attach` configuration.
+
+1. Open the F1 menu and select **Show Stored Procedure Tables**
+2. Select your batch configuration.
+3. Enter your mainframe password and press enter.  
+The Stored Procedure Table displays.
+4. Select **Add New Schedule Entry**.
+5. Select either **DB2** or **IMS**.
+6. (Optional) Specify a name for your job and press enter.
+7. Specify your program name and press enter.
+8. (IMS only, optional) Specify an IMS transaction ID for the schedule entry and press enter. If you leave this prompt blank, all transactions are processed. This field can be wildcarded and cannot contain more than eight characters.
+9. (IMS only, optional) Specify an IMS user ID for the schedule entry and press enter. This field can be wildcarded and cannot contain more than eight characters.  
+The **Is this a one-time entry?** prompt displays.
+10. Select **Yes** or **No**. If you select **Yes**, the session is deleted from the Stored Procedure Table after it is attached to the Batch Link Queue.  
+The stored procedure is scheduled. To view it in the Stored Procedure Table, repeat steps 1 to 3 above.
+
+#### Delete a DB2 or IMS Stored Procedure
+
+1. Open the F1 menu and select **Show Stored Procedure Tables**
+2. Select your batch configuration.
+3. Enter your mainframe password and press enter.  
+The Stored Procedure Table displays.
+4. Select the delete icon next to the procedure that you want to delete.
+5. When prompted select **Yes** to confirm the deletion.
+The procedure is deleted.
 
 ### Call Trace and Statement Trace
 
@@ -213,6 +367,8 @@ Correctly defined breakpoints are marked by a red dot.
 
 Incorrectly defined breakpoints are marked by a grey dot or circle, with a summary error message indicating the cause of the error.
 
+You can only use one conditional breakpoint per line.
+
 ### Paragraph Breakpoints
 
 Set the `launch.json` parameter **paragraphBreakpoints** to "true" to trigger a breakpoint at the beginning of every new paragraph in COBOL code, and every label in Assembler code. For more information, see [Add Configuration](#add-configuration).
@@ -261,8 +417,6 @@ To use Debugger for Mainframe over a secure connection, obtain the server certif
 Enter the following command: `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
         
 ### Import Server Certificate on a Linux Subsystem
-
-**Follow these steps:**
      
 1. Verify that Java is installed by running the command `java -version`.
 2. Locate your subsystem's java installation.
@@ -270,8 +424,6 @@ Enter the following command: `sudo keytool -import -alias hostname -file hostnam
 4. Run the following command to import the certificate: `sudo keytool -import -alias hostname -file hostname.cer -storetype JKS -keystore cacerts`
           
 ### Import Server Certificate using a UI
-
-**Follow these steps:**
 
 1. In your preferred UI, locate and open **cacerts**.
 2. Import the certificate to cacerts.
@@ -289,6 +441,7 @@ You have configured Debugger for Mainframe to use a secure connection to InterTe
 The following issues are known and will be fixed in future releases:
 
 - Conditional breakpoints validator does not work on VS Code version 1.74.
+- We currently only support one user on an active debugging session at one time. If multiple users join the same session from the Batch Link Queue, it might affect performance and cause other unwanted issues.
 
 ### Enable Troubleshooting Log
 To generate a troubleshooting log, add the following parameters to your `launch.json` file:

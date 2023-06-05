@@ -2,6 +2,18 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.8.0] 2023-06-02
+
+#### Added
+- Batch Link support
+- Batch attach debug configuration
+- Support for the Suspend feature on Batch sessions
+- Full support for the Step into and Step out functions
+- Basic batch demo walkthrough
+
+#### Changed
+- Readme update
+
 ## [1.7.0] 2023-01-13
 
 #### Added
