@@ -1,7 +1,7 @@
 <div id="header" align="center">
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/BroadcomMFD/debugger-for-mainframe?style=flat-square)](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
-[![slack](https://img.shields.io/badge/chat-on%20Slack-blue?style=flat-square)](https://communityinviter.com/apps/che4z/code4z)
+[![slack](https://img.shields.io/badge/chat-on%20Slack-blue?style=flat-square)](https://join.slack.com/t/che4z/shared_invite/zt-22b0064vn-nBh~Fs9Fl47Prp5ItWOLWw)
 </div>
 
 # Debugger for Mainframe
@@ -25,8 +25,10 @@ We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/ite
 ### Server
 - InterTest for CICS and/or InterTest Batch, incremental release 11.0.07 or higher.
 - Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, and LU08307.
+    - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, acquire and install PTF LU11400 in addition to the PTFs above.
 - [Testing Tools Server](http://techdocs.broadcom.com/content/broadcom/techdocs/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/installing/install-testing-tools-server.html)
     - To use Debugger for Mainframe to debug CICS programs, ensure that you complete the tasks in the sections "Activation of the IP CICS Sockets" and "Set Up an IRC Connection" on the linked page when you configure your Testing Tools Server instance.
+    - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, [integrate your Testing Tools server instance with the API Mediation Layer](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/installing/install-testing-tools-server/Integrate-testing-tools-server-with-the-mediation-layer.html).
 
 ### Client
 - Java version 8.0 or higher with the PATH variable correctly configured. For more information see the [Java documentation](https://www.java.com/en/download/help/path.xml).
@@ -71,7 +73,9 @@ During the demo session, you are instructed to fill in a `launch.json` file with
             },
 ````
 
-After you add this optional parameter, the full empty configuration displays as follows:
+If you connect to InterTest through an Zowe API Mediation Layer gateway, add the line `"APIMLServiceID": "",` below the `"port"` parameter.
+
+After you add these optional parameters, the full empty configuration displays as follows:
 
 ````
 {
@@ -84,8 +88,9 @@ After you add this optional parameter, the full empty configuration displays as 
             "protsym": [
                 "PROTSYM"
             ],
-            "interTestHost": "HOST",
-            "interTestPort": 0,
+            "host": "HOST",
+            "port": 0,
+            "APIMLServiceID": "",
             "interTestUserName": "USER",
             "interTestSecure": true,
             "originalJCL": {
@@ -99,12 +104,14 @@ After you add this optional parameter, the full empty configuration displays as 
 Populate the fields as follows:
 - **"programName":**
    - Replace PROGNAME with CAMRCOBB.
-- **"protsym":**
+- **"protsym":** 
    - Replace PROTSYM with the DSN of the PROTSYM that you linked to CAMRCOBB.
-- **"interTestHost":**
-   - Replace HOST with the address of your Testing Tools Server.
-- **"interTestPort":**
-   - Specify the port of your Testing Tools Server.
+- **"host":**
+   - Replace HOST with the address of your Testing Tools Server or Zowe API Mediation Layer Gateway.
+- **"port":**
+   - Specify the port of your Testing Tools Server or Zowe API Mediation Layer Gateway.
+- **"APIMLServiceID":**
+   - (API Mediation Layer only) Specify your Zowe API Mediation Layer Service ID. Do not include this field if you connect through a Testing Tools Server instance.
 - **"interTestUser":**
    - Replace USER with your mainframe username.
 - **"interTestSecure":**
@@ -160,56 +167,60 @@ When you create a `launch.json` file for the first time, a configuration is adde
 
 After you add your configuration, populate the following fields:
 
-- **"type":**
+- **"type":** (string)
     - Specify "intertest-cics" or "intertest-batch".
     - If you use the "Add configuration" button, this parameter is filled automatically.
-- **"request":**
+- **"request":** (string)
     - Specify "attach" if this is a Batch Link Queue configuration (see [Enable the Batch Link Queue](#enable-the-batch-link-queue) below), otherwise specify "launch".
     - If you use the "Add configuration" button, this parameter is filled automatically.
-- **"name":**
+- **"name":** (string)
     - Specifies the name of the debugging session.
-- **"programName"**:
+- **"programName"**: (array)
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
     - Specify an array with either one value or multiple values separated by commas.
     - In an `attach` configuration, this parameter is optional.
-- **"protsym"**:
+- **"protsym"**: (array)
     - (Batch only) Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
     - In an `attach` configuration, this parameter is optional.
-- **"interTestHost"**:
-    - Specifies the host address of your Testing Tools Server instance.
-- **"interTestPort"**:
-    - Specifies the port number of your Testing Tools Server instance.
+- **"host"**:
+    - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
+- **"port"**:
+    - Specifies the port number of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
+- **"APIMLServiceID"**:
+    - (API Mediation Layer only) Specifies your Zowe API Mediation Layer Service ID. Do not include this field if you connect through a Testing Tools Server instance.
 - **"interTestUserName"**:
     - Specifies your mainframe username.
-- **"interTestSecure"**:
+- **"interTestSecure"**: (boolean)
     - Specify "true" to use a secure connection to the InterTest server or "false" to use a non-secure connection.  
       Ensure that you complete the steps in the **[Set Up a Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
-- **"originalJCL"**:
+- **"originalJCL"**: (JSON)
     - (Batch only) Specifies the location of the JCL containing the program that you want to debug. Debugger for Mainframe converts this JCL so that it can be debugged.  
       This is a JSON element containing the following fields:
-        - **"inDSN"**:
+        - **"inDSN"**: (string)
             - Specifies the DSN and member name of the JCL containing the program that you want to debug.
-        - **"stepName"**:
+        - **"stepName"**: (string)
             - Specifies the step name of the program that you want to debug.
-        - **"procLibs"**:
+        - **"procLibs"**: (array)
             - (Optional) Specify an array with any number of DSNs containing procedure libraries. Specify this field if your JCL requires a procedure library to be converted.
-- **"convertedJCL"**:
+- **"convertedJCL"**: (string)
     - (Batch only) Specifies the DSN and member name where you want to store your converted JCL. Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL.
-- **"cicsApplId"**:
+- **"cicsApplId"**: (string)
     - (CICS only) Specifies the CICS Application ID (cicsApplID) of your CICS region.
-- **"cicsUserId"**:
+- **"cicsUserId"**: (string)
     - (CICS only, optional) Specify a CICS user logon ID to debug a CICS program or transaction as it executes for that specific ID. You cannot modify this value during an active debugging session.
-- **"interTestCharset"**:
+- **"interTestCharset"**: (string)
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
-- **"paragraphBreakpoints"**:
+- **"paragraphBreakpoints"**: (boolean)
     - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph or label. For more information, see [Paragraph Breakpoints](#paragraph-breakpoints).
-- **"callTrace"**:
+- **"callTrace"**: (boolean)
     - (CICS only, optional) Specify "false" to disable the call trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
-- **"statementTrace"**:
+- **"statementTrace"**: (boolean)
     - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
     - **Note**: If you disable this parameter for a CICS session, the "step out" and "step over" functions of the debug toolbar are also disabled.
-- **"executionCounts"**:
+- **"executionCounts"**: (boolean)
     - (Batch only, optional) Specify "true" to enable the execution counts feature. The feature is disabled by default. For more information, see [Execution Counts](#execution-counts).
+- **"variableOrder"**: (string)
+    - (Optional) Specify "alphabetical" to sort the variables that are defined in your program in alphabetical order in the variables view. Specify "definition" to sort the variables in the order of their definition in the program. The default setting is "definition". 
 
 #### Enable the Batch Link Queue
 
@@ -277,20 +288,20 @@ When you run a debug session using an `attach` configuration, the **Suspend** bu
 
 When you suspend a debug session, breakpoints that you define in Visual Studio Code are saved with the session. If you load a debug session from the Batch Link Queue that has breakpoints saved, these breakpoints override ones that are defined locally on the same lines.
 
-### Manage DB2 and IMS Stored Procedures
+### Manage the Batch Link Schedule Table
 
-You can use Debugger for Mainframe to schedule and delete DB2 and IMS stored procedures. 
+You can use Debugger for Mainframe to manage the Batch Link Schedule Table, which enables you to debug DB2 Stored Procedures and IMS DC applications.
 
-To manage stored procedures, ensure that you have a batch `launch` or `attach` configuration containing your Testing Tools Server host and port and your mainframe username. You can leave the `programName` and `protsym` fields in this configuration at their default values.
+To manage your Batch Link Schedule Table, ensure that you have a batch `launch` or `attach` configuration containing your Testing Tools Server host and port and your mainframe username. You can leave the `programName` and `protsym` fields in this configuration at their default values.
 
-#### Schedule a DB2 or IMS Stored Procedure
+#### Schedule a DB2 Stored Procedure or IMS DC Application
 
-To schedule stored procedures, you add the session to the Stored Procedure Table, from which you can later run it from the Batch Link Queue using an `attach` configuration.
+To debug a DB2 stored procedure or an IMS DC application, you add the appropriate criteria to the Batch Link Schedule Table, from which you can later run it from the Batch Link Queue using an `attach` configuration.
 
-1. Open the F1 menu and select **Show Stored Procedure Tables**
+1. Open the F1 menu and select **Batch: Show Schedule Table**
 2. Select your batch configuration.
 3. Enter your mainframe password and press enter.  
-The Stored Procedure Table displays.
+The Batch Link Schedule Table displays.
 4. Select **Add New Schedule Entry**.
 5. Select either **DB2** or **IMS**.
 6. (Optional) Specify a name for your job and press enter.
@@ -298,18 +309,18 @@ The Stored Procedure Table displays.
 8. (IMS only, optional) Specify an IMS transaction ID for the schedule entry and press enter. If you leave this prompt blank, all transactions are processed. This field can be wildcarded and cannot contain more than eight characters.
 9. (IMS only, optional) Specify an IMS user ID for the schedule entry and press enter. This field can be wildcarded and cannot contain more than eight characters.  
 The **Is this a one-time entry?** prompt displays.
-10. Select **Yes** or **No**. If you select **Yes**, the session is deleted from the Stored Procedure Table after it is attached to the Batch Link Queue.  
-The stored procedure is scheduled. To view it in the Stored Procedure Table, repeat steps 1 to 3 above.
+10. Select **Yes** or **No**. If you select **Yes**, the session is deleted from the Batch Link Schedule Table after it is attached to the Batch Link Queue.  
+The stored procedure is scheduled. To view it in the Batch Link Schedule Table, repeat steps 1 to 3 above.
 
-#### Delete a DB2 or IMS Stored Procedure
+#### Delete a Batch Link Schedule Table Entry
 
-1. Open the F1 menu and select **Show Stored Procedure Tables**
+1. Open the F1 menu and select **Batch: Show Schedule Table**
 2. Select your batch configuration.
 3. Enter your mainframe password and press enter.  
-The Stored Procedure Table displays.
+The Batch Link Schedule Table displays.
 4. Select the delete icon next to the procedure that you want to delete.
 5. When prompted select **Yes** to confirm the deletion.
-The procedure is deleted.
+The entry is deleted.
 
 ### Call Trace and Statement Trace
 
@@ -368,6 +379,16 @@ Correctly defined breakpoints are marked by a red dot.
 Incorrectly defined breakpoints are marked by a grey dot or circle, with a summary error message indicating the cause of the error.
 
 You can only use one conditional breakpoint per line.
+
+### Data Breakpoints
+
+Data breakpoints are attached to variables and cause the program to stop when the value of the attached variable changes. To set a data breakpoint, right-click a variable in the Variable Tree View and select **Break on Value Change**.
+
+When you set a data breakpoint in Debugger for Mainframe, a variable-change breakpoint is set on the same variable on the server side. When you set a variable-change breakpoint in InterTest, a data breakpoint is set in Debugger for Mainframe when you load the program listing. 
+
+- **Note:** Due to a known issue, data breakpoints that are set as variable-change breakpoints on InterTest do not show up in the Variables Tree View.
+
+Data breakpoints are valid for one debug session only and must be reset after each use.
 
 ### Paragraph Breakpoints
 
@@ -436,12 +457,11 @@ You have configured Debugger for Mainframe to use a secure connection to InterTe
 
 ## Troubleshooting
 
-### Known Issues
-
-The following issues are known and will be fixed in future releases:
+### Known Limitations
 
 - Conditional breakpoints validator does not work on VS Code version 1.74.
 - We currently only support one user on an active debugging session at one time. If multiple users join the same session from the Batch Link Queue, it might affect performance and cause other unwanted issues.
+- COBOL table variables defined with the OCCURS X TIMES keyword can only be updated from the variables view, not from the editor.
 
 ### Enable Troubleshooting Log
 To generate a troubleshooting log, add the following parameters to your `launch.json` file:

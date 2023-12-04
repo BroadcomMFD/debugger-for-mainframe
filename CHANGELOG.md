@@ -2,13 +2,37 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
-## [1.8.0] 2023-06-02
+## [1.9.0] 2023-12-01
+
+#### Added
+- Option to connect to InterTest via the API Mediation Layer
+- Support for table variables
+- Support for data breakpoints
+
+#### Changed
+- Launch.json parameters `interTestHost` and `interTestPort` changed to `host` and `port`
+- Readme update
+
+## [1.8.1] 2023-06-29
+
+#### Changed
+- Readme update
+- IMS fields accept wildcard character '*'
+- Fetch extended sources not allowed for 'attach' configurations
+
+#### Fixed
+- IMS transaction connection with wrong transaction name
+- Attach session with automatic breakpoint on first line
+- Expected breakpoint behavior on attach session
+
+## [1.8.0] 2023-06-05
 
 #### Added
 - Batch Link support
 - Batch attach debug configuration
 - Support for the Suspend feature on Batch sessions
 - Full support for the Step into and Step out functions
+- DB2 stored procedure and IMS DC application support
 - Basic batch demo walkthrough
 
 #### Changed
@@ -20,6 +44,7 @@ All notable changes to the Debugger for Mainframe extension are documented in th
 - High-Level Assembler Language support
 - Full support for conditional breakpoints (validator currently not supported on VS Code version 1.74)
 - Support for label breakpoints in Assembler code
+- Getting Started with CICS Debugging walkthrough
 
 #### Changed
 - Variable enhancements
