@@ -133,7 +133,7 @@ To debug Batch programs, you also convert the JCL of your program into a new fil
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Setup%20and%20config%20Edited.gif)
 
-See [this video](https://www.youtube.com/watch?v=f6ZxwALSb_Y&ab_channel=Educate) for a step-by-step walkthrough of CICS debugging using Debugger for Mainframe.
+See [this video](https://www.youtube.com/watch?v=TPk-OaTneZM) for a step-by-step walkthrough of CICS debugging using Debugger for Mainframe.
 
 ### Create a Configuration File
 
