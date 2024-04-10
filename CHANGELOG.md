@@ -2,6 +2,11 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.9.1] 2024-04-10
+
+#### Fixed
+- Update FD and linkage storage defined variables values 
+
 ## [1.9.0] 2023-12-01
 
 #### Added
