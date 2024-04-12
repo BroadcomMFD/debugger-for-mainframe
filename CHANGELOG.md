@@ -2,6 +2,11 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.9.2] 2024-04-12
+
+#### Fixed
+- Set variable value in High-Level Assembler
+
 ## [1.9.1] 2024-04-10
 
 #### Fixed
