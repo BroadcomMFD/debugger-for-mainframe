@@ -2,6 +2,20 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.10.0] 2024-04-30
+
+#### Added
+- Dynamic Symbolic Support
+- Set variable value in hexadecimal format
+- Variable filtering
+- Link to the Zowe Explorer jobs tree on running a batch debug session
+
+#### Changed
+- Readme update
+
+#### Fixed
+- Miscellaneous bug fixes
+
 ## [1.9.2] 2024-04-12
 
 #### Fixed

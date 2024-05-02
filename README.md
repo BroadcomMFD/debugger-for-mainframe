@@ -10,13 +10,11 @@ Debugger for Mainframe provides a debugging interface for [InterTest™ for CICS
 
 > How can we improve Debugger for Mainframe? [Let us know on our Git repository](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
 
-Debugger for Mainframe is also part of [Code4z](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack), an all-round package that offers a modern experience for mainframe application developers, including extensions for language support, data editing, testing, and source code management.
+Debugger for Mainframe is part of [Code4z](https://techdocs.broadcom.com/code4z), an all-round VS Code extension package that offers a modern experience for mainframe application developers, including tools for language support, data editing, testing, and source code management. For an interactive overview of Code4z, see the [Code4z Developer Cockpit](https://mainframe.broadcom.com/code4z-developer-cockpit).
 
 ## Compatibility
 
 Debugger for Mainframe is supported on Visual Studio Code and Github Codespaces.
-
-We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe) to access mainframe data sets in connection with your debugging sessions. You can use Zowe Explorer to submit JCL or to edit your converted JCL before running batch debugging sessions. Zowe Explorer is available as part of the Code4z package.
 
 <a href="https://www.openmainframeproject.org/all-projects/zowe/conformance"><img alt="This extension is Zowe v2 conformant" src="https://artwork.openmainframeproject.org/other/zowe-conformant/zowev2/explorer/color/zowe-conformant-zowev2-explorer-color.png" width=20% height=20% /></a>
 
@@ -26,9 +24,11 @@ We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/ite
 - InterTest for CICS and/or InterTest Batch, incremental release 11.0.07 or higher.
 - Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, and LU08307.
     - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, acquire and install PTF LU11400 in addition to the PTFs above.
-- [Testing Tools Server](http://techdocs.broadcom.com/content/broadcom/techdocs/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/installing/install-testing-tools-server.html)
+- Testing Tools Server
     - To use Debugger for Mainframe to debug CICS programs, ensure that you complete the tasks in the sections "Activation of the IP CICS Sockets" and "Set Up an IRC Connection" on the linked page when you configure your Testing Tools Server instance.
-    - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, [integrate your Testing Tools server instance with the API Mediation Layer](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/installing/install-testing-tools-server/Integrate-testing-tools-server-with-the-mediation-layer.html).
+    - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, integrate your Testing Tools Server instance with the API Mediation Layer
+
+For information on the Testing Tools server and API Mediation Layer, see the [InterTest documentation](http://techdocs.broadcom.com/itsd). 
 
 ### Client
 - Java version 8.0 or higher with the PATH variable correctly configured. For more information see the [Java documentation](https://www.java.com/en/download/help/path.xml).
@@ -40,6 +40,14 @@ We recommend the use of [Zowe Explorer](https://marketplace.visualstudio.com/ite
 
 Debugger for Mainframe is supported on Visual Studio Code version 1.67.0 and above.
 
+### Integrate with Zowe Explorer
+
+You can integrate Debugger for Mainframe with [Zowe Explorer](https://docs.zowe.org/stable/getting-started/user-roadmap-zowe-explorer) and set up a Zowe profile to access mainframe data sets and track the status of JCL jobs in connection with your debugging sessions. You can also use Zowe Explorer to submit JCL or to edit your converted JCL before running batch debugging sessions. 
+
+To enable job status messages, a Zowe profile name must be specified in your configuration file (see the **[Add Configuration](#add-configuration)** section below).
+
+Zowe Explorer is available as part of the Code4z package.
+
 ## Getting Started
 
 Debugger for Mainframe includes two walkthroughs to help you become acquainted with key features of the extension. To access the walkthroughs, select **Welcome** from the **Help** menu, and select from the options under **Walkthroughs** - **More...**
@@ -48,11 +56,15 @@ The buttons in these walkthroughs run commands which can otherwise be found in t
 
 ### Get Started with CICS Debugging
 
-The **Get Started with CICS Debugging** walkthrough guides you through the steps required to set up and run a basic CICS debugging session. If you do not have a CICS program to run, you can use the [Basic COBOL Demo Session](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/getting-started/ca-intertest-for-cics-primers/cobol-primer/cobol-basic-demo-session.html) which comes shipped with InterTest for CICS.
+The **Get Started with CICS Debugging** walkthrough guides you through the steps required to set up and run a basic CICS debugging session. If you do not have a CICS program to run, you can use the Basic COBOL Demo Session which comes shipped with InterTest for CICS.
+
+For more information about the Basic COBOL Demo Session, see the [InterTest and SymDump documentation](https://techdocs.broadcom.com/itsd).
+
+See [this video](https://youtu.be/3F3i-lC7zmA) for a step-by-step walkthrough of CICS debugging using Debugger for Mainframe.
 
 ### Basic Batch Demo Session
 
-The **Basic Batch Demo Session** walkthrough guides you through the [Basic Batch Link Demo](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/getting-started/ca-intertest-batch-demo-sessions/basic-batch-link-demo.html) which comes shipped with InterTest Batch. 
+The **Basic Batch Demo Session** walkthrough guides you through the Basic Batch Link Demo which comes shipped with InterTest Batch. For more information about the Basic Batch Link Demo, see the [InterTest and SymDump documentation](https://techdocs.broadcom.com/itsd).
 
 The demo program, CAMRCOBB, is in the data set CAI.CAVHSAMP. Note that CAI is the default high-level qualifier, and it can be changed during installation, so on your instance of InterTest the HLQ might be different.
 
@@ -133,8 +145,6 @@ To debug Batch programs, you also convert the JCL of your program into a new fil
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Setup%20and%20config%20Edited.gif)
 
-See [this video](https://www.youtube.com/watch?v=f6ZxwALSb_Y&ab_channel=Educate) for a step-by-step walkthrough of CICS debugging using Debugger for Mainframe.
-
 ### Create a Configuration File
 
 To start debugging programs in your IDE, you first create a `launch.json` file within your workspace.
@@ -165,36 +175,85 @@ The `launch.json` file contains configurations for debugging different types of 
 
 When you create a `launch.json` file for the first time, a configuration is added. Click the **Add configuration** button in the configuration drop-down list to add further configurations.
 
-After you add your configuration, populate the following fields:
+#### Basic CICS Configuration
 
-- **"type":** (string)
-    - Specify "intertest-cics" or "intertest-batch".
-    - If you use the "Add configuration" button, this parameter is filled automatically.
-- **"request":** (string)
-    - Specify "attach" if this is a Batch Link Queue configuration (see [Enable the Batch Link Queue](#enable-the-batch-link-queue) below), otherwise specify "launch".
-    - If you use the "Add configuration" button, this parameter is filled automatically.
-- **"name":** (string)
+To add a basic CICS configuration, do the following:
+
+1. Open your `launch.json` file.
+2. Click the **Add configuration...** button in the bottom-right corner of the tab.
+3. Select **Debugger for Mainframe: INTERTEST™ FOR CICS**.
+4. Populate the following fields:
+  - **"type":** (string)
+    - Specify "intertest-cics".
+  - **"request":** (string)
+    - Specify "launch".
+  - **"name":** (string)
     - Specifies the name of the debugging session.
-- **"programName"**: (array)
+  - **"programName"**: (array)
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
     - Specify an array with either one value or multiple values separated by commas.
-    - In an `attach` configuration, this parameter is optional.
-- **"protsym"**: (array)
-    - (Batch only) Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
-    - In an `attach` configuration, this parameter is optional.
-- **"host"**:
+  - **"host"**: (string)
     - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
-- **"port"**:
+  - **"port"**: (integer)
     - Specifies the port number of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
-- **"APIMLServiceID"**:
+  - **"APIMLServiceID"**: (string)
     - (API Mediation Layer only) Specifies your Zowe API Mediation Layer Service ID. Do not include this field if you connect through a Testing Tools Server instance.
-- **"interTestUserName"**:
+  - **"interTestUserName"**: (string)
     - Specifies your mainframe username.
-- **"interTestSecure"**: (boolean)
+  - **"interTestSecure"**: (boolean)
     - Specify "true" to use a secure connection to the InterTest server or "false" to use a non-secure connection.  
       Ensure that you complete the steps in the **[Set Up a Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
-- **"originalJCL"**: (JSON)
-    - (Batch only) Specifies the location of the JCL containing the program that you want to debug. Debugger for Mainframe converts this JCL so that it can be debugged.  
+  - **"cicsApplId"**: (string)
+    - Specifies the CICS Application ID (cicsApplID) of your CICS region.
+  - **"cicsUserId"**: (string)
+    - (Optional) Specify a CICS user logon ID to debug a CICS program or transaction as it executes for that specific ID. You cannot modify this value during an active debugging session.
+  - **"interTestCharset"**: (string)
+    - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
+  - **"paragraphBreakpoints"**: (boolean)
+    - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph or label. For more information, see [Paragraph Breakpoints](#paragraph-breakpoints).
+  - **"callTrace"**: (boolean)
+    - (Optional) Specify "false" to disable the call trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
+  - **"statementTrace"**: (boolean)
+    - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
+    - **Note**: If you disable this parameter, the "step out" and "step over" functions of the debug toolbar are also disabled.
+  - **"variableOrder"**: (string)
+    - (Optional) Specify "alphabetical" to sort the variables that are defined in your program in alphabetical order in the variables view. Specify "definition" to sort the variables in the order of their definition in the program. The default setting is "definition". 
+5. Follow the steps in [Run a Debug Session](#run-a-debug-session) to start your debug session.
+
+#### Basic Batch Configuration
+
+To add a basic configuration to debug a batch application, do the following:
+
+1. Open your `launch.json` file.
+2. Click the **Add configuration...** button in the bottom-right corner of the tab.
+3. Select **Debugger for Mainframe: INTERTEST™ FOR BATCH**.
+4. Populate the following fields:
+  - **"type":** (string)
+    - Specify "intertest-batch".
+  - **"request":** (string)
+    - Specify "launch".
+  - **"name":** (string)
+    - Specifies the name of the debugging session.
+  - **"programName"**: (array)
+    - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
+    - Specify an array with either one value or multiple values separated by commas.
+  - **"protsym"**: (array)
+    - Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+  - **DSS**: (string)
+    - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
+  - **"host"**: (string)
+    - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
+  - **"port"**: (integer)
+    - Specifies the port number of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
+  - **"APIMLServiceID"**: (string)
+    - (API Mediation Layer only) Specifies your Zowe API Mediation Layer Service ID. Do not include this field if you connect through a Testing Tools Server instance.
+  - **"interTestUserName"**: (string)
+    - Specifies your mainframe username.
+  - **"interTestSecure"**: (boolean)
+    - Specify "true" to use a secure connection to the InterTest server or "false" to use a non-secure connection.  
+      Ensure that you complete the steps in the **[Set Up a Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
+  - **"originalJCL"**: (JSON)
+    - (Optional) Specify this parameter if you want Debugger for Mainframe to convert the JCL of your program for debugging.
       This is a JSON element containing the following fields:
         - **"inDSN"**: (string)
             - Specifies the DSN and member name of the JCL containing the program that you want to debug.
@@ -202,25 +261,21 @@ After you add your configuration, populate the following fields:
             - Specifies the step name of the program that you want to debug.
         - **"procLibs"**: (array)
             - (Optional) Specify an array with any number of DSNs containing procedure libraries. Specify this field if your JCL requires a procedure library to be converted.
-- **"convertedJCL"**: (string)
-    - (Batch only) Specifies the DSN and member name where you want to store your converted JCL. Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL.
-- **"cicsApplId"**: (string)
-    - (CICS only) Specifies the CICS Application ID (cicsApplID) of your CICS region.
-- **"cicsUserId"**: (string)
-    - (CICS only, optional) Specify a CICS user logon ID to debug a CICS program or transaction as it executes for that specific ID. You cannot modify this value during an active debugging session.
-- **"interTestCharset"**: (string)
+  - **"convertedJCL"**: (string)
+    - Specifies the DSN and member name where you want to store your converted JCL. Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL.
+  - **"interTestCharset"**: (string)
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
-- **"paragraphBreakpoints"**: (boolean)
+  - **"paragraphBreakpoints"**: (boolean)
     - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph or label. For more information, see [Paragraph Breakpoints](#paragraph-breakpoints).
-- **"callTrace"**: (boolean)
-    - (CICS only, optional) Specify "false" to disable the call trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
-- **"statementTrace"**: (boolean)
+  - **"statementTrace"**: (boolean)
     - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
-    - **Note**: If you disable this parameter for a CICS session, the "step out" and "step over" functions of the debug toolbar are also disabled.
-- **"executionCounts"**: (boolean)
-    - (Batch only, optional) Specify "true" to enable the execution counts feature. The feature is disabled by default. For more information, see [Execution Counts](#execution-counts).
-- **"variableOrder"**: (string)
+  - **"executionCounts"**: (boolean)
+    - (Optional) Specify "true" to enable the execution counts feature. The feature is disabled by default. For more information, see [Execution Counts](#execution-counts).
+  - **"variableOrder"**: (string)
     - (Optional) Specify "alphabetical" to sort the variables that are defined in your program in alphabetical order in the variables view. Specify "definition" to sort the variables in the order of their definition in the program. The default setting is "definition". 
+  - **"zoweProfileName"**: (string)  
+    - (Optional) Specify the name of a Zowe profile to enable job status messages when you run your debugging session.
+5. Follow the steps in [Run a Debug Session](#run-a-debug-session) to start your debug session.
 
 #### Enable the Batch Link Queue
 
@@ -231,27 +286,64 @@ Enable the Batch Link Queue to add the Suspend and Attach functionalities to you
 
 To enable the Batch Link Queue you add a new configuration to your existing `launch.json` file, which must already contain at least one `intertest-batch` configuration.
 
-1. On the run and debug tab, click the down arrow on the list of configurations in the top-left corner.
-2. Select **Add Configuration**
-3. From the drop-down list, select **Debugger for Mainframe: INTERTEST™ BATCH - Attach**  
-   The `launch.json` file opens, containing a new `intertest-batch` configuration with the parameter `request: "attach"`.
-4. Populate all fields in the new configuration (see the **[Add Configuration](#add-configuration)** section above for instructions).  
+1. Open your `launch.json` file.
+2. Click the **Add configuration...** button in the bottom-right corner of the tab.
+3. Select **Debugger for Mainframe: INTERTEST™ FOR BATCH - Attach**.
+4. Populate the following fields:
+- **"type":** (string)
+    - Specify "intertest-batch".
+  - **"request":** (string)
+    - Specify "attach".
+  - **"name":** (string)
+    - Specifies the name of the debugging session.
+  - **"programName"**: (array)
+    - (Optional) Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
+    - Specify an array with either one value or multiple values separated by commas.
+  - **"protsym"**: (array)
+    - (Optional) Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+  - **DSS**: (string)
+    - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
+  - **"host"**: (string)
+    - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
+  - **"port"**: (integer)
+    - Specifies the port number of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
+  - **"APIMLServiceID"**: (string)
+    - (API Mediation Layer only) Specifies your Zowe API Mediation Layer Service ID. Do not include this field if you connect through a Testing Tools Server instance.
+  - **"interTestUserName"**: (string)
+    - Specifies your mainframe username.
+  - **"interTestSecure"**: (boolean)
+    - Specify "true" to use a secure connection to the InterTest server or "false" to use a non-secure connection.  
+      Ensure that you complete the steps in the **[Set Up a Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
+  - **"interTestCharset"**: (string)
+    - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
+  - **"paragraphBreakpoints"**: (boolean)
+    - (Optional) Specify "true" to have the debugging session stop automatically at each new paragraph or label. For more information, see [Paragraph Breakpoints](#paragraph-breakpoints).
+  - **"statementTrace"**: (boolean)
+    - (Optional) Specify "false" to disable the statement trace feature. The feature is enabled by default. For more information, see [Call Trace and Statement Trace](#call-trace-and-statement-trace).
+  - **"executionCounts"**: (boolean)
+    - (Optional) Specify "true" to enable the execution counts feature. The feature is disabled by default. For more information, see [Execution Counts](#execution-counts).
+  - **"variableOrder"**: (string)
+    - (Optional) Specify "alphabetical" to sort the variables that are defined in your program in alphabetical order in the variables view. Specify "definition" to sort the variables in the order of their definition in the program. The default setting is "definition". 
+
+### Dynamic Symbolic Support
+
+If you have integrated InterTest with Endevor on the backend, you can activate the dynamic symbolic support feature to dynamically load symbolic data into a PROTSYM. To enable dynamic symbolic support, specify a PROTSYM in the **"DSS"** parameter of a batch `launch` or `attach` configuration. This PROTSYM is searched along with the other PROTSYMs that you specify in the **"protsym"** array.
+
+For more information about dynamic symbolic support, see the [InterTest and SymDump documentation](https://techdocs.broadcom.com/itsd).
 
 ### Run a Debug Session
 
 After you define your configuration in `launch.json`, you can run your debug session in the debugging interface.
 
-1. Press F1 to open the interface.
+1. Open the **Run and Debug** panel.
 
-2. (Batch only, optional) To convert your JCL, type **Batch: Convert JCL** and press enter. Complete this step when debugging a program for the first time, or if your program changed since the last debug session.
+2. (Batch only, optional) To convert your JCL, press **F1** to open the command pallet and run the command **Batch: Convert JCL**. Complete this step when debugging a program for the first time, or if your program changed since the last debug session.
 
-3. Type **Fetch Extended Sources**.
-    - This auto-populates as you type, so the required source might appear before you type the full source name.
+3. Press **F1** to open the command pallet and run the command **Fetch Extended Sources**.
 
-4. Select the required source, for example:
-    - ``` INTERTEST™ FOR CICS ```
+4. If you have more than one Debugger for Mainframe configuration defined in `launch.json`, a list of available configurations displays. Select the name of the configuration that you want to use to fetch your source.
 
-5. Enter your password.
+5. Enter your mainframe password.
     - The expanded source is displayed.
 
 6. Set breakpoints as required. You can set breakpoints before you start the debugging process or as the process is running.
@@ -264,7 +356,7 @@ After you define your configuration in `launch.json`, you can run your debug ses
                 
 8. Click the play icon in the top left of the interface to start the debugging process.
 
-9. (CICS only) Run your program on your CICS region.
+9. (CICS only) Run your program in your CICS region.
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Breakpoints.gif)
 
@@ -274,6 +366,7 @@ You have successfully initiated a debugging session.
 - You can use the **Continue**, **Step over**, **Step into** and **Step out** functions of the IDE Debug Toolbar. The **Restart** function is not supported. 
 - To use the **Step over** and **Step out** functions during a CICS session, ensure that you enable statement trace in your `launch.json` file.
 - Use the **Stop** button to terminate the debugging session. If you have a Batch Link Queue (`attach`) configuration in your `launch.json` file, you can use the drop-down arrow to switch between the **Stop** and the **Suspend** buttons. Use the **Suspend** button to temporarily terminate a debug session and add it to the Batch Link Queue, from which you can resume it later.
+- If you specified a Zowe profile name in the `zoweProfileName` field of `launch.json`, a message with a batch job ID appears when the session completes. Click the job ID to open information about the job in Zowe Explorer.
 
 ### Run a Debug Session From the Batch Link Queue
 
@@ -321,6 +414,32 @@ The Batch Link Schedule Table displays.
 4. Select the delete icon next to the procedure that you want to delete.
 5. When prompted select **Yes** to confirm the deletion.
 The entry is deleted.
+
+### Variables Tree View
+
+Use the VS Code variables tree view to view and edit the value of variables during your debugging session. As well as the regular VS Code functionality, Debugger for Mainframe also enables you to edit the hexadecimal value of a variable.
+
+#### Filter Variables
+
+To find a variable in the variables tree view, do the following:
+1. Right-click anywhere in the variables tree or click the **...** button in the top-right corner. 
+2. Select **Filter Variable**  
+  - A prompt opens
+3. Enter the full name of the variable and press enter.
+
+Alternatively, you can right-click any variable in the code and select **Filter Variable**.
+
+To clear a variable filter, right-click anywhere in the variables tree and select **Clear Filter**.
+
+#### Edit the Hexadecimal Value of a Variable
+
+To edit the hexadecimal value of a variable, do the following:  
+
+1. Locate the variable in the variables view.
+2. Right-click the variable and select **Set Value**.
+3. Enter the hexadecimal value in the format <b>0x<i>value</i></b> and press enter.
+
+You can hover over a variable with an invalid format in the edit window to view the hexadecimal value.
 
 ### Call Trace and Statement Trace
 
