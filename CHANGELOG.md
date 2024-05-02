@@ -2,7 +2,7 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
-## [1.10.0] 2024-04-30
+## [1.10.0] 2024-05-02
 
 #### Added
 - Dynamic Symbolic Support
