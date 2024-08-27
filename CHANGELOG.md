@@ -2,6 +2,24 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.11.0] 2024-08-XX
+
+#### Added
+- Inline variables view
+- Support for dynamic debugging sessions for batch programs
+- Composite debugging, includes 'List composites' command in command palette
+- Autokeep variables (COBOL only), represented in Local variables group
+- CICS Defined Variables (COBOL only)
+
+#### Changed
+- InterTest PTFs LU13684 and LU14009 added to prerequisites
+- Variables tree organised into Global, Local, CICS-Defined and Assembly General Purpose groups.
+- Execution counts displayed left from source
+- Readme update
+
+#### Fixed
+- Miscellaneous bug fixes
+
 ## [1.10.0] 2024-05-02
 
 #### Added
