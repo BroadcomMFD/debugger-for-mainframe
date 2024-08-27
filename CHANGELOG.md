@@ -2,7 +2,7 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
-## [1.11.0] 2024-08-XX
+## [1.11.0] 2024-08-27
 
 #### Added
 - Inline variables view
