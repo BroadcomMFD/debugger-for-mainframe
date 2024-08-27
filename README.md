@@ -22,7 +22,7 @@ Debugger for Mainframe is supported on Visual Studio Code and Github Codespaces.
 
 ### Server
 - InterTest for CICS and/or InterTest Batch, incremental release 11.0.07 or higher.
-- Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, and LU08307.
+- Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, LU08307, LU11016, LU13684, and LU14009.
     - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, acquire and install PTF LU11400 in addition to the PTFs above.
 - Testing Tools Server
     - To use Debugger for Mainframe to debug CICS programs, ensure that you complete the tasks in the sections "Activation of the IP CICS Sockets" and "Set Up an IRC Connection" on the linked page when you configure your Testing Tools Server instance.
@@ -191,7 +191,9 @@ To add a basic CICS configuration, do the following:
     - Specifies the name of the debugging session.
   - **"programName"**: (array)
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
-    - Specify an array with either one value or multiple values separated by commas.
+    - To debug a program that is part of a composite module, use the format MODULE_PROGRAM. To debug all programs in a composite module, specify MODULE_.
+      - **Tip**: To see the list of all programs in a composite module, add the module to this field, and run the pallet command **List Composites**. The list of programs displays in the Output Panel.
+    - Specify an array with either one value or up to 30 values separated by commas.
   - **"host"**: (string)
     - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
   - **"port"**: (integer)
@@ -236,11 +238,12 @@ To add a basic configuration to debug a batch application, do the following:
     - Specifies the name of the debugging session.
   - **"programName"**: (array)
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
-    - Specify an array with either one value or multiple values separated by commas.
+    - Specify an array with either one value or up to 30 values separated by commas.
   - **"protsym"**: (array)
-    - Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+    - Specify an array with up to 8 PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
   - **DSS**: (string)
     - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
+    - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
   - **"host"**: (string)
     - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
   - **"port"**: (integer)
@@ -263,6 +266,9 @@ To add a basic configuration to debug a batch application, do the following:
             - (Optional) Specify an array with any number of DSNs containing procedure libraries. Specify this field if your JCL requires a procedure library to be converted.
   - **"convertedJCL"**: (string)
     - Specifies the DSN and member name where you want to store your converted JCL. Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL.
+  - **"symbols"**: (JSON)
+    - (Optional) Specify values for any number of variables in the converted JCL. Use the format `"PARAM": "VALUE"` and separate each entry by commas within this JSON element. 
+    - The value on the right side of each entry can use input variables. For more information, see the [VS Code documentation](https://code.visualstudio.com/docs/editor/variables-reference#_input-variables).
   - **"interTestCharset"**: (string)
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
   - **"paragraphBreakpoints"**: (boolean)
@@ -298,11 +304,12 @@ To enable the Batch Link Queue you add a new configuration to your existing `lau
     - Specifies the name of the debugging session.
   - **"programName"**: (array)
     - (Optional) Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
-    - Specify an array with either one value or multiple values separated by commas.
+    - Specify an array with either one value or up to 30 values separated by commas.
   - **"protsym"**: (array)
-    - (Optional) Specify an array with any number of PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+    - (Optional) Specify an array with up to 8 PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
   - **DSS**: (string)
     - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
+    - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
   - **"host"**: (string)
     - Specifies the host address of your Testing Tools Server instance or Zowe API Mediation Layer Gateway.
   - **"port"**: (integer)
@@ -419,17 +426,22 @@ The entry is deleted.
 
 Use the VS Code variables tree view to view and edit the value of variables during your debugging session. As well as the regular VS Code functionality, Debugger for Mainframe also enables you to edit the hexadecimal value of a variable.
 
+Variables in the tree view are sorted under the following categories:
+
+* **Global**
+  * Shows the last known value of all variables in the program.
+* **Local**
+  * (COBOL only) Shows the value of all variables on the currently selected line when the debugging session is paused.
+* **CICS Defined Variables**
+  * (COBOL only, CICS only) Shows the value of all variables defined in the CICS region where your debug session is running.
+* **General Purpose Registers**
+  * (Assembler only) Shows the content of all 16 General Purpose Registers.
+
 #### Filter Variables
 
-To find a variable in the variables tree view, do the following:
-1. Right-click anywhere in the variables tree or click the **...** button in the top-right corner. 
-2. Select **Filter Variable**  
-  - A prompt opens
-3. Enter the full name of the variable and press enter.
+To find a variable in the variables tree view, click the **Filter** icon and type a search string in the text box at the top of the interface. The search returns all variables which contain the provided string. To clear an active filter, click the **Filter** icon.
 
-Alternatively, you can right-click any variable in the code and select **Filter Variable**.
-
-To clear a variable filter, right-click anywhere in the variables tree and select **Clear Filter**.
+The filter searches variable names under the **Global** and **CICS Defined Variables** headings only.
 
 #### Edit the Hexadecimal Value of a Variable
 
@@ -440,6 +452,17 @@ To edit the hexadecimal value of a variable, do the following:
 3. Enter the hexadecimal value in the format <b>0x<i>value</i></b> and press enter.
 
 You can hover over a variable with an invalid format in the edit window to view the hexadecimal value.
+
+### Inline Variables View
+
+Enable inline variables view to see the values of all variables on the highlighted line of code inline.
+
+![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/inlinevars.png)
+
+To enable and disable inline variables view, use the following commands in the debug console:
+
+* `/inline on`, `/inline off`
+    - Enables and disables inline variables view.
 
 ### Call Trace and Statement Trace
 
@@ -543,8 +566,6 @@ The execution count feature is disabled by default. It can be enabled in `launch
 To enable or disable the execution count feature during your debug session, use the debug console commands `/counts on` and `/counts off`. After you submit the `/counts on` command, perform an action which progresses the debugging session to display the execution count.
 
 The execution count variable is stored on the mainframe and is only reset when you perform an action which progresses the debugging session. It is not reset by the `/counts off` command or by closing Visual Studio Code.
-
-**Note:** The execution count appears in column 80 of the editor window. Ensure that your IDE window is wide enough to see it.
 
 ## Set up Secure Connection
 
