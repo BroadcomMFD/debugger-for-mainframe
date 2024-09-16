@@ -22,7 +22,7 @@ Debugger for Mainframe is supported on Visual Studio Code and Github Codespaces.
 
 ### Server
 - InterTest for CICS and/or InterTest Batch, incremental release 11.0.07 or higher.
-- Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, LU08307, LU11016, LU13684, and LU14009.
+- Acquire and install PTFs LU08488, LU08046, LU06771, LU08177, LU08307, LU11016, LU13684, LU14009 and LU14606.
     - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, acquire and install PTF LU11400 in addition to the PTFs above.
 - Testing Tools Server
     - To use Debugger for Mainframe to debug CICS programs, ensure that you complete the tasks in the sections "Activation of the IP CICS Sockets" and "Set Up an IRC Connection" on the linked page when you configure your Testing Tools Server instance.
