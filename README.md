@@ -240,7 +240,7 @@ To add a basic configuration to debug a batch application, do the following:
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
     - Specify an array with either one value or up to 30 values separated by commas.
   - **"protsym"**: (array)
-    - Specify an array with up to 8 PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+    - Specify an array with up to 8 PROTSYM DSNs separated by commas.
   - **DSS**: (string)
     - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
     - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
@@ -306,7 +306,7 @@ To enable the Batch Link Queue you add a new configuration to your existing `lau
     - (Optional) Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
     - Specify an array with either one value or up to 30 values separated by commas.
   - **"protsym"**: (array)
-    - (Optional) Specify an array with up to 8 PROTSYM DSNs separated by commas. The newest PROTSYM which matches your executable is used for the debug session.
+    - (Optional) Specify an array with up to 8 PROTSYM DSNs separated by commas.
   - **DSS**: (string)
     - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
     - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
@@ -350,20 +350,22 @@ After you define your configuration in `launch.json`, you can run your debug ses
 
 4. If you have more than one Debugger for Mainframe configuration defined in `launch.json`, a list of available configurations displays. Select the name of the configuration that you want to use to fetch your source.
 
-5. Enter your mainframe password.
+5. If more than one listing is found in the CICS regions or PROTSYMs specified in your configuration, or if no exact matching listing is found, a list of listings displays. Select the listing that you want to load.
+
+6. Enter your mainframe password.
     - The expanded source is displayed.
 
-6. Set breakpoints as required. You can set breakpoints before you start the debugging process or as the process is running.
+7. Set breakpoints as required. You can set breakpoints before you start the debugging process or as the process is running.
     
     - For more information, see **[Conditional and Unconditional Breakpoints](#conditional-and-unconditional-breakpoints)**
 
-7. Set logpoints as required. Logpoints can be used to highlight an issue within the program while it is running, however logpoints do not cause the program to terminate.
+8. Set logpoints as required. Logpoints can be used to highlight an issue within the program while it is running, however logpoints do not cause the program to terminate.
 
     - For more information, see **[Logpoints](#logpoints)**
                 
-8. Click the play icon in the top left of the interface to start the debugging process.
+9. Click the play icon in the top left of the interface to start the debugging process.
 
-9. (CICS only) Run your program in your CICS region.
+10. (CICS only) Run your program in your CICS region.
 
 ![](https://raw.githubusercontent.com/BroadcomMFD/debugger-for-mainframe/master/Breakpoints.gif)
 

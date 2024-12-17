@@ -2,16 +2,27 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.12.0] 2024-12-17
+
+#### Added
+- Symbolic selection list provided in case of Symbolic mismatch.
+- Fetch Extended Sources provides list of available Symbolics for the program.
+
+#### Changed
+- Readme update
+
+#### Fixed
+- Miscellaneous bug fixes
 
 ## [1.11.1] 2024-09-16
 
- #### Changed
- - InterTest PTF LU14606 added to prerequisites
+#### Changed
+- InterTest PTF LU14606 added to prerequisites
 
- #### Fixed
- - Attach Configuration for batch using wrong flag for Symbolics.
- - Watch variable with Java version newer than 11.
- - Resume debugging doesn't stop on breakpoint in the sub program for attach configuration.
+#### Fixed
+- Attach Configuration for batch using wrong flag for Symbolics.
+- Watch variable with Java version newer than 11.
+- Resume debugging doesn't stop on breakpoint in the sub program for attach configuration.
 
 ## [1.11.0] 2024-08-27
 
