@@ -22,11 +22,7 @@ Debugger for Mainframe is supported on Visual Studio Code and Github Codespaces.
 
 ### Server
 - InterTest for CICS and/or InterTest Batch, incremental release 11.0.07 or higher.
-- Level Set PTF 11.0.02 is now available. We recommend installing this PTF to apply all maintenance updates and new feature PTFs up to the specified modification level. This release supersedes all previously published PTFs and Level Set PTFs, ensuring that all prior fixes and enhancements are included. For details on new features, see:
-    - [InterTest™ and SymDump® 11.0 New Features](https://techdocs.broadcom.com/us/en/ca-mainframe-software/devops/ca-intertest-and-ca-symdump/11-0/release-notes/new-features.html)
-    - PTF [LU15349](https://support.broadcom.com/web/ecx/solutiondetails?aparNo=LU15349&os=z%2FOS).
-
-    To ensure a smooth experience, we recommend applying this Level Set along with all recently published PTFs.
+- Acquire and install Level Set PTF 11.0.02 (LU15115) and PTF LU15349. We recommend that you remain current on maintenance for InterTest.
 - Testing Tools Server
     - To use Debugger for Mainframe to debug CICS programs, ensure that you complete the tasks in the sections "Activation of the IP CICS Sockets" and "Set Up an IRC Connection" on the linked page when you configure your Testing Tools Server instance.
     - To connect to Debugger for Mainframe via the Zowe API Mediation Layer, integrate your Testing Tools Server instance with the API Mediation Layer
