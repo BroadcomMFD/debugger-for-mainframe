@@ -2,6 +2,23 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.13.0] 2025-05-16
+
+#### Added
+- Support for passphrases and case-sensitive passwords
+- Support for Single Sign-On using a Zowe Explorer profile
+- Option to store security certificate in the native OS certificate store
+- Configuration snippets for the InterTest basic demo sessions
+
+#### Changed
+- Batch link queue now runs in the background until a session becomes available
+- New PTFs added to prerequisites
+- Readme update
+
+#### Fixed
+- Disabling breakpoints
+- Fetch Extended Sources now works for attach configurations
+
 ## [1.12.0] 2024-12-17
 
 #### Added
