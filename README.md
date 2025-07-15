@@ -23,7 +23,7 @@ Debugger for Mainframe is part of [Code4z](https://techdocs.broadcom.com/code4z)
 - [Technical Assistance and Support for Debugger for Mainframe](#technical-assistance-and-support-for-debugger-for-mainframe)
 - [Privacy Notice](#privacy-notice)
 
-## Prerequisites
+## Address Software Requirements
 
 Before you use Debugger for Mainframe, ensure that your site and workstation meet the following requirements:
 
