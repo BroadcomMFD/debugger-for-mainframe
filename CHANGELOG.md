@@ -2,6 +2,11 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.13.1] 2025-07-21
+
+#### Changed
+- Readme update
+
 ## [1.13.0] 2025-05-16
 
 #### Added
