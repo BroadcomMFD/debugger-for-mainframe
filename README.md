@@ -1,16 +1,22 @@
 <div id="header" align="center">
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/BroadcomMFD/debugger-for-mainframe?style=flat-square)](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
-[![slack](https://img.shields.io/badge/chat-on%20Slack-blue?style=flat-square)](https://join.slack.com/t/che4z/shared_invite/zt-22b0064vn-nBh~Fs9Fl47Prp5ItWOLWw)
+[![slack](https://img.shields.io/badge/chat-on%20Slack-blue)](https://join.slack.com/t/che4z/shared_invite/zt-37ewynplx-wCoabaIDxN6Ofm4_XBinZA)
+[![Code4z](https://img.shields.io/badge/Code4z-marketplace-cc092f)](https://marketplace.visualstudio.com/search?term=code4z&target=VSCode)
+
 </div>
 
 # Debugger for Mainframe
 
 Debugger for Mainframe provides a debugging interface for [InterTest™ for CICS](https://www.broadcom.com/products/mainframe/devops-app-development/testing-quality/intertest-cics) and [InterTest™ Batch](https://www.broadcom.com/products/mainframe/testing-and-quality/intertest-batch). This extension provides a modern debugging experience for CICS and Batch programs written in COBOL and High-Level Assembler Language (HLASM).
 
-Debugger for Mainframe is part of [Code4z](https://techdocs.broadcom.com/code4z), an all-round VS Code extension package that offers a modern experience for mainframe application developers, including tools for language support, data editing, testing, and source code management. For an interactive overview of Code4z, see the [Code4z Developer Cockpit](https://mainframe.broadcom.com/code4z-developer-cockpit).
+<img align="left" alt="This extension is part of the Code4z experience" width="80" height="82" src="https://raw.githubusercontent.com/BroadcomMFD/code4z/refs/heads/main/icon5.png" />
 
-- [Prerequisites](#prerequisites)
+Debugger for Mainframe is part of the [Code4z](https://techdocs.broadcom.com/code4z) experience from Broadcom, which offers a modern experience for mainframe application developers. To get started with Code4z, check out our foundational [extension pack](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack).
+
+<br />
+
+- [Address Software Requirements](#address-software-requirements)
 - [Set Up Secure Connection](#set-up-secure-connection)
 - [Getting Started](#getting-started)
 - [Debugging](#debugging)
@@ -23,7 +29,7 @@ Debugger for Mainframe is part of [Code4z](https://techdocs.broadcom.com/code4z)
 - [Technical Assistance and Support for Debugger for Mainframe](#technical-assistance-and-support-for-debugger-for-mainframe)
 - [Privacy Notice](#privacy-notice)
 
-## Prerequisites
+## Address Software Requirements
 
 Before you use Debugger for Mainframe, ensure that your site and workstation meet the following requirements:
 
@@ -590,3 +596,4 @@ Each such event is logged with the following information:
 - Country or region
 - Anonymous user and session ID
 - Version numbers of Microsoft VS Code and Debugger for Mainframe
+
