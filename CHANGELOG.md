@@ -2,6 +2,19 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.14.0] 2026-01-15
+
+#### Added
+- Lite Mode: Option to connect to InterTest over SSH instead of using the Testing Tools Server
+- Testing Tools Server encoding autodetection
+
+#### Fixed
+- Symbolic synchronization
+- Symbolic mismatch abort
+
+#### Changed
+- Readme update
+
 ## [1.13.2] 2025-12-04
 
 #### Fixed
@@ -92,7 +105,7 @@ All notable changes to the Debugger for Mainframe extension are documented in th
 ## [1.9.1] 2024-04-10
 
 #### Fixed
-- Update FD and linkage storage defined variables values 
+- Update FD and linkage storage defined variables values
 
 ## [1.9.0] 2023-12-01
 
@@ -222,7 +235,7 @@ All notable changes to the Debugger for Mainframe extension are documented in th
 - Support for Batch debugging using CA InterTest Batch
 - Conversion of JCL to be used for Batch debugging
 - Support for non-UTF8 charsets
-- Holistic logging 
+- Holistic logging
 
 #### Fixed
 - Dropdown list to choose a configuration no longer displays the same configuration twice.
