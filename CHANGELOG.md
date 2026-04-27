@@ -2,6 +2,20 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.14.2] 2026-04-27
+
+#### Added
+- Option to edit the converted JCL before starting a batch debugging session
+- Use credentials from Zowe credentials store
+- Java home configuration option
+
+#### Fixed
+- Support native OS certificate store for commands
+- Support wide assembler listing format
+
+#### Changed
+- Readme update
+
 ## [1.14.1] 2026-01-15
 
 #### Changed

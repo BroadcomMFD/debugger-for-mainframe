@@ -10,6 +10,15 @@
 
 Debugger for Mainframe provides a debugging interface for [InterTest™ for CICS](https://www.broadcom.com/products/mainframe/devops-app-development/testing-quality/intertest-cics) and [InterTest™ Batch](https://www.broadcom.com/products/mainframe/testing-and-quality/intertest-batch). This extension provides a modern debugging experience for CICS and Batch programs written in COBOL and High-Level Assembler Language (HLASM).
 
+Debugger for Mainframe enables the modern mainframe developer to debug CICS and Batch applications in the modern, intuitive interface of the Visual Studio Code Run and Debug Panel instead of the traditional 3270 green screen terminal. By bringing CICS and Batch application debugging directly into a widely adopted IDE, Debugger for Mainframe allows developers to navigate their mainframe code using familiar playback controls. This integration ensures that modern application developers can interact with enterprise mainframe code with the same fluid and accessible experience as they are accustomed to when debugging modern languages.
+
+The extension enhances the debugging workflow through advanced control and visibility features: 
+* Support for several types of breakpoints to precisely isolate specific programmatic behaviors.
+* Dynamic inspection of variables through a hierarchical tree view that accurately reflects complex data structures, such as COBOL levels.
+* Tracing features that track the sequence of program-to-program calls and the execution of individual statements.
+
+Bringing these capabilities into VS Code delivers strategic value by accelerating developer productivity and reducing the time spent troubleshooting defects. By standardizing the development environment across both distributed and mainframe teams, organizations can facilitate a unified, cross-platform enterprise DevOps culture.
+
 <img align="left" alt="This extension is part of the Code4z experience" width="80" height="82" src="https://raw.githubusercontent.com/BroadcomMFD/code4z/refs/heads/main/icon5.png" />
 
 Debugger for Mainframe is part of the [Code4z](https://techdocs.broadcom.com/code4z) experience from Broadcom, which offers a modern experience for mainframe application developers. To get started with Code4z, check out our foundational [extension pack](https://marketplace.visualstudio.com/items?itemName=broadcomMFD.code4z-extension-pack).
@@ -20,17 +29,17 @@ Debugger for Mainframe is part of the [Code4z](https://techdocs.broadcom.com/cod
 <summary id="address-software-requirements"><span style="font-size: 1.5em"><b>Address Software Requirements</b></span><hr></summary>
 
 InterTest can be configured to support Debugger for Mainframe in one of two modes:
-* In **Enterprise Mode**, Debugger for Mainframe connects to InterTest through a Testing Tools Server (an instance of CCS Apache Tomcat). The Testing Tools Server can also be integrated with the Zowe API Mediation Layer (Zowe API ML). 
-* In **Lite Mode**, Debugger for Mainframe connects to InterTest through z/OS OpenSSH in Unix System Services.
+* In **Server Mode**, Debugger for Mainframe connects to InterTest through a Testing Tools Server (an instance of CCS Apache Tomcat). The Testing Tools Server can also be integrated with the Zowe API Mediation Layer (Zowe API ML). 
+* In **SSH Mode**, Debugger for Mainframe connects to InterTest through z/OS OpenSSH in Unix System Services.
 
-Lite Mode is best suited to proofs of concept, early adoptions, and small user bases. We recommend the use of Enterprise Mode for larger user bases and more frequent usage.
+SSH Mode is best suited to proofs of concept, early adoptions, and small user bases. We recommend the use of Server Mode for larger user bases and for production.
 
 Before you use Debugger for Mainframe, ensure that your site and workstation meet the necessary requirements for your mode.
 
-#### Requirements for Enterprise Mode Configuration
+#### Requirements for Server Mode Configuration
 
 - InterTest for CICS and/or InterTest Batch version 11 installed on the mainframe. Additionally, the following maintenance and configuration tasks must be completed:
-  - Apply Level Set PTF 11.0.03 (LU19095). 
+  - Apply Level Set PTF 11.0.03 (LU19095) and PTF LU19740.
   - Configure the Testing Tools Server.
   - To debug CICS programs, configure CICS IRC and one of TCP or CAICCI.
   - To connect to Debugger for Mainframe through the Zowe API Mediation Layer, integrate your Testing Tools Server instance with Zowe API ML.
@@ -38,9 +47,10 @@ Before you use Debugger for Mainframe, ensure that your site and workstation mee
 
 For information about the Testing Tools Server and API Mediation Layer, see the [InterTest documentation](http://techdocs.broadcom.com/itsd).
 
-#### Requirements for Lite Mode Configuration
+#### Requirements for SSH Mode Configuration
 
-- InterTest for CICS and/or InterTest Batch version 11 installed on the mainframe with Level Set PTF 11.0.03 (LU19095) applied.
+- InterTest for CICS and/or InterTest Batch version 11 installed on the mainframe.
+- Apply Level Set PTF 11.0.03 (LU19095) and PTF LU19740.
 - Access to USS over SSH.
 - Java version 8.0 or higher installed on USS.
 - Permission to use at least 320MB of RAM to run Java in USS. To debug larger programs, you might need to increase this allocation to 512MB.
@@ -50,7 +60,7 @@ For information about the Testing Tools Server and API Mediation Layer, see the 
 <details>
 <summary id="set-up-secure-connection"><span style="font-size: 1.5em"><b>Set Up Secure Connection</b></span><hr></summary>
 
-If you connect to InterTest in Enterprise Mode, you can use Debugger for Mainframe over a secure connection if your Testing Tools Server instance is configured for a secure connection. 
+If you connect to InterTest in Server Mode, you can use Debugger for Mainframe over a secure connection if your Testing Tools Server instance is configured for a secure connection. 
 
 To use Debugger for Mainframe over a secure connection, obtain the server certificate for your Testing Tools Server instance and import it to a certificate store. You can use a Java trust store or a trust store in your operating system.
 
@@ -142,7 +152,7 @@ The `launch.json` file contains configurations for debugging different types of 
 * **Debugger for Mainframe: INTERTEST™ BATCH - Attach**
   Configuration to attach Batch programs to the Batch Link Queue.
 
-The configuration parameters are different for each program type. The parameters also vary depending on whether your site is configured to connect to InterTest in Enterprise Mode (through a Testing Tools Server or Zowe API ML Gateway) or in Lite Mode (through USS over SSH).
+The configuration parameters are different for each program type. The parameters also vary depending on whether your site is configured to connect to InterTest in Server Mode (through a Testing Tools Server or Zowe API ML Gateway) or in SSH Mode (through USS over SSH).
 
 When you create a `launch.json` file, a configuration is added. Click the **Add configuration** button in the configuration drop-down list to add further configurations.
 
@@ -163,10 +173,10 @@ To add a basic configuration to debug a CICS application, add a **Debugger for M
       - **Tip**: To see the list of all programs in a composite module, add the module to this field, and run the pallet command **List Composites**. The list of programs displays in the Output Panel.
     - Specify an array with either one value or up to 30 values separated by commas.
   - **"host"**: (string)
-    - **Enterprise Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
-    - **Lite Mode**: Specifies the address of your USS host. 
+    - **Server Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
+    - **SSH Mode**: Specifies the address of your USS host. 
   - **"port"**: (integer)
-    - (Enterprise Mode only) Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
+    - (Server Mode only) Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
   - **"interTestUserName"**: (string)
     - Specifies your mainframe username. Do not include this field if you use the Zowe API ML Single Sign-On feature.
   - **"apimlProfile"**: (string)
@@ -174,10 +184,10 @@ To add a basic configuration to debug a CICS application, add a **Debugger for M
   - **"path"**: (string)
     - (Zowe API ML only) Specifies the base path of your Zowe API ML InterTest service.
   - **"interTestSecure"**: (boolean)
-    - (Enterprise Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
+    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
       Ensure that you complete the steps in the **[Set Up Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
   - **"ssh"** (JSON)
-    - (Lite Mode only) Include this JSON element to connect to InterTest using Lite Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[Lite Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
+    - (SSH Mode only) Include this JSON element to connect to InterTest using SSH Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[SSH Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
     - In this JSON element, always include the parameter **"enabled": true**, regardless of how you configure the SSH connection.   
   - **"cicsApplId"**: (string)
     - Specifies the CICS Application ID (cicsApplID) of your CICS region.
@@ -216,10 +226,10 @@ To add a basic configuration to debug a batch application, add a **Debugger for 
     - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
     - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
   - **"host"**: (string)
-    - **Enterprise Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
-    - **Lite Mode**: Specifies the address of your USS host. 
+    - **Server Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
+    - **SSH Mode**: Specifies the address of your USS host. 
   - **"port"**: (integer)
-    - Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature or if you connect in Lite Mode.
+    - Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature or if you connect in SSH Mode.
   - **"interTestUserName"**: (string)
     - Specifies your mainframe username. Do not include this field if you use the Zowe API ML Single Sign-On feature.
   - **"apimlProfile"**: (string)
@@ -227,10 +237,10 @@ To add a basic configuration to debug a batch application, add a **Debugger for 
   - **"path"**: (string)
     - (Zowe API ML only) Specifies the base path of your Zowe API ML InterTest service. Do not include this field if you connect through a Testing Tools Server instance.
   - **"interTestSecure"**: (boolean)
-    - (Enterprise Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
+    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
       Ensure that you complete the steps in the **[Set Up Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
   - **"ssh"** (JSON)
-    - (Lite Mode only) Include this JSON element to connect to InterTest using Lite Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[Lite Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
+    - (SSH Mode only) Include this JSON element to connect to InterTest using SSH Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[SSH Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
     - In this JSON element, always include the parameter **"enabled": true**, regardless of how you configure the SSH connection.
   - **"originalJCL"**: (JSON)
     - (Optional) Specify this parameter if you want Debugger for Mainframe to convert the JCL of your program for debugging.
@@ -243,6 +253,8 @@ To add a basic configuration to debug a batch application, add a **Debugger for 
             - (Optional) Specify an array with any number of DSNs containing procedure libraries. Specify this field if your JCL requires a procedure library to be converted.
   - **"convertedJCL"**: (string)
     - Specifies the DSN and member name where you want to store your converted JCL. Specify the full name of a partitioned data set and a member in the format DSN(MEMBER). Debugger for Mainframe creates or overwrites this member when you convert the JCL.
+  - **"editBeforeSubmit"**: (boolean)
+    - (Optional) Specify "true" to have Debugger for Mainframe open the converted JCL for editing before the debugging session starts. This parameter is disabled by default.
   - **"symbols"**: (JSON)
     - (Optional) Specify values for any number of variables in the converted JCL. Use the format `"PARAM": "VALUE"` and separate each entry by commas within this JSON element.
     - The value on the right side of each entry can use input variables. For more information, see the [VS Code documentation](https://code.visualstudio.com/docs/editor/variables-reference#_input-variables).
@@ -285,10 +297,10 @@ To enable the Batch Link Queue, add a **Debugger for Mainframe: INTERTEST™ FOR
     - (Optional) Specify the PROTSYM which is designated to receive dynamic symbolic data from Endevor. For more information, see **[Dynamic Symbolic Support](#dynamic-symbolic-support)**.
     - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
   - **"host"**: (string)
-    - **Enterprise Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
-    - **Lite Mode**: Specifies the address of your USS host. 
+    - **Server Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
+    - **SSH Mode**: Specifies the address of your USS host. 
   - **"port"**: (integer)
-    - Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature or if you connect in Lite Mode.
+    - Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature or if you connect in SSH Mode.
   - **"interTestUserName"**: (string)
     - Specifies your mainframe username. Do not include this field if you use the Zowe API ML Single Sign-On feature.
   - **"apimlProfile"**: (string)
@@ -296,10 +308,10 @@ To enable the Batch Link Queue, add a **Debugger for Mainframe: INTERTEST™ FOR
   - **"path"**: (string)
     - (Zowe API ML only) Specifies the base path of your Zowe API ML InterTest service. Do not include this field if you connect through a Testing Tools Server instance.
   - **"interTestSecure"**: (boolean)
-    - (Enterprise Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
+    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
       Ensure that you complete the steps in the **[Set Up Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
   - **"ssh"** (JSON)
-    - (Lite Mode only) Include this JSON element to connect to InterTest using Lite Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[Lite Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
+    - (SSH Mode only) Include this JSON element to connect to InterTest using SSH Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[SSH Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
     - In this JSON element, always include the parameter **"enabled": true**, regardless of how you configure the SSH connection.
   - **"interTestCharset"**: (string)
     - (Optional) Specifies the Testing Tools Server Charset for Listings. Specify this field only if your Testing Tools Server instance is configured to use a client code page other than UTF-8.
@@ -314,9 +326,9 @@ To enable the Batch Link Queue, add a **Debugger for Mainframe: INTERTEST™ FOR
 </details>
 
 <details>
-<summary id="lite-mode-ssh-configuration"><span style="font-size: 1.3em">Lite Mode (SSH) Configuration</span></summary>
+<summary id="lite-mode-ssh-configuration"><span style="font-size: 1.3em">SSH Mode Configuration</span></summary>
 
-To connect to InterTest in Lite Mode, specify the necessary parameters to connect to USS over SSH. You can either specify these parameters in your `launch.json` file in the `"ssh"` JSON element, or as environment variables in USS. The parameters can also be specified in USS by your systems programmer.
+To connect to InterTest in SSH Mode, specify the necessary parameters to connect to USS over SSH. You can either specify these parameters in your `launch.json` file in the `"ssh"` JSON element, or as environment variables in USS. The parameters can also be specified in USS by your systems programmer.
 
 The `"ssh"` JSON element contains the following parameters:
 
@@ -343,7 +355,7 @@ The `"ssh"` JSON element contains the following parameters:
 Populate the following fields:
 
 - **"enabled"**: (boolean)
-  - Specify **true** to enable Lite Mode. Always include this parameter even if you specify the SSH parameters as environment variables in USS.
+  - Specify **true** to enable SSH Mode. Always include this parameter even if you specify the SSH parameters as environment variables in USS.
 - **"privateKeyPath"**: (string)
   - (Optional) Specifies the location of your private SSH key on your local machine.  
 - **"integrationMode"**: (string)
