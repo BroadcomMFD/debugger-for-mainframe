@@ -2,6 +2,11 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.14.3] 2026-06-19
+
+#### Fixed
+- Forward compatibility improvements
+
 ## [1.14.2] 2026-04-27
 
 #### Added
