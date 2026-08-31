@@ -2,6 +2,20 @@
 
 All notable changes to the Debugger for Mainframe extension are documented in this file.
 
+## [1.14.4] 2026-09-01
+
+#### Added
+- SSH host key verification
+
+#### Fixed
+- Security fixes
+- Variable subtitution in launch configuration
+- Compatibility with HLASM Language Support 1.22.1 and newer
+
+#### Changed
+- Improved launch configuration validation
+- Extension size optimization
+
 ## [1.14.3] 2026-06-19
 
 #### Fixed

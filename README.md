@@ -169,7 +169,7 @@ To add a basic configuration to debug a CICS application, add a **Debugger for M
     - Specifies the name of the debugging session.
   - **"programName"**: (array)
     - Specifies the name of the program that you want to debug using this configuration. To debug a program along with other programs called within it, specify all program names you want to debug in this field.
-    - To debug a program that is part of a composite module, use the format MODULE_PROGRAM. To debug all programs in a composite module, specify MODULE_.
+    - To debug a program that is part of a composite module, specify the module and program names in the format *modulename_programname*. To debug all programs in a composite module, specify the module name followed by an underscore (*modulename_*).
       - **Tip**: To see the list of all programs in a composite module, add the module to this field, and run the pallet command **List Composites**. The list of programs displays in the Output Panel.
     - Specify an array with either one value or up to 30 values separated by commas.
   - **"host"**: (string)
