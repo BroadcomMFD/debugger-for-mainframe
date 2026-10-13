@@ -60,7 +60,7 @@ For information about the Testing Tools Server and API Mediation Layer, see the 
 <details>
 <summary id="set-up-secure-connection"><span style="font-size: 1.5em"><b>Set Up Secure Connection</b></span><hr></summary>
 
-If you connect to InterTest in Server Mode, you can use Debugger for Mainframe over a secure connection if your Testing Tools Server instance is configured for a secure connection. 
+If you connect to InterTest in Server Mode, you can use Debugger for Mainframe over HTTPS if your Testing Tools Server instance is configured for a secure connection. We recommend that you use a secure connection unless you are on a private network or your connection is secured by other means.
 
 To use Debugger for Mainframe over a secure connection, obtain the server certificate for your Testing Tools Server instance and import it to a certificate store. You can use a Java trust store or a trust store in your operating system.
 
@@ -174,7 +174,7 @@ To add a basic configuration to debug a CICS application, add a **Debugger for M
     - Specify an array with either one value or up to 30 values separated by commas.
   - **"host"**: (string)
     - **Server Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
-    - **SSH Mode**: Specifies the address of your USS host. 
+    - **SSH Mode**: Specifies either the address of your USS host or the alias of your SSH host connection from your system SSH configuration file.
   - **"port"**: (integer)
     - (Server Mode only) Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
   - **"interTestUserName"**: (string)
@@ -184,7 +184,8 @@ To add a basic configuration to debug a CICS application, add a **Debugger for M
   - **"path"**: (string)
     - (Zowe API ML only) Specifies the base path of your Zowe API ML InterTest service.
   - **"interTestSecure"**: (boolean)
-    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
+    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.
+      We recommend that you use a secure connection unless you are on a private network or your connection is secured by other means.  
       Ensure that you complete the steps in the **[Set Up Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
   - **"ssh"** (JSON)
     - (SSH Mode only) Include this JSON element to connect to InterTest using SSH Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[SSH Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
@@ -227,7 +228,7 @@ To add a basic configuration to debug a batch application, add a **Debugger for 
     - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
   - **"host"**: (string)
     - **Server Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
-    - **SSH Mode**: Specifies the address of your USS host. 
+    - **SSH Mode**: Specifies either the address of your USS host or the alias of your SSH host connection from your system SSH configuration file.
   - **"port"**: (integer)
     - Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature or if you connect in SSH Mode.
   - **"interTestUserName"**: (string)
@@ -237,7 +238,8 @@ To add a basic configuration to debug a batch application, add a **Debugger for 
   - **"path"**: (string)
     - (Zowe API ML only) Specifies the base path of your Zowe API ML InterTest service. Do not include this field if you connect through a Testing Tools Server instance.
   - **"interTestSecure"**: (boolean)
-    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
+    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.
+      We recommend that you use a secure connection unless you are on a private network or your connection is secured by other means.  
       Ensure that you complete the steps in the **[Set Up Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
   - **"ssh"** (JSON)
     - (SSH Mode only) Include this JSON element to connect to InterTest using SSH Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[SSH Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
@@ -298,7 +300,7 @@ To enable the Batch Link Queue, add a **Debugger for Mainframe: INTERTEST™ FOR
     - **Note**: The DSS PROTSYM counts towards the maximum of 8 PROTSYMs per configuration. If you specify this parameter, the maximum allowed number of PROTSYMs in the **"protsym"** array is reduced to 7.
   - **"host"**: (string)
     - **Server Mode**: Specifies the address of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature.
-    - **SSH Mode**: Specifies the address of your USS host. 
+    - **SSH Mode**: Specifies either the address of your USS host or the alias of your SSH host connection from your system SSH configuration file.
   - **"port"**: (integer)
     - Specifies the port number of your Testing Tools Server instance or Zowe API ML Gateway. Do not include this field if you use the Zowe API ML Single Sign-On feature or if you connect in SSH Mode.
   - **"interTestUserName"**: (string)
@@ -308,7 +310,8 @@ To enable the Batch Link Queue, add a **Debugger for Mainframe: INTERTEST™ FOR
   - **"path"**: (string)
     - (Zowe API ML only) Specifies the base path of your Zowe API ML InterTest service. Do not include this field if you connect through a Testing Tools Server instance.
   - **"interTestSecure"**: (boolean)
-    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.  
+    - (Server Mode only) Specify "true" to use a secure connection to the Testing Tools Server or "false" to use a non-secure connection.
+      We recommend that you use a secure connection unless you are on a private network or your connection is secured by other means.  
       Ensure that you complete the steps in the **[Set Up Secure Connection](#set-up-secure-connection)** section if you want to use a secure connection.
   - **"ssh"** (JSON)
     - (SSH Mode only) Include this JSON element to connect to InterTest using SSH Mode. You can specify SSH connection parameters in this JSON element or as USS environment variables. For more information, see the section **[SSH Mode (SSH) Configuration](#lite-mode-ssh-configuration)**.
@@ -451,7 +454,7 @@ When you run a debug session using an `attach` configuration, the **Suspend** bu
 When you suspend a debug session, breakpoints that you define in Visual Studio Code are saved with the session. If you load a debug session from the Batch Link Queue that has breakpoints saved, these breakpoints override ones that are defined locally on the same lines.
 
 We currently only support one user on an active debugging session at one time. If multiple users join the same session from the Batch Link Queue, it might affect performance and cause other unwanted issues.
-   </details>
+</details>
 
 <details>
 <summary id="manage-the-batch-link-scheduling-table"><span style="font-size: 1.3em">Manage the Batch Link Scheduling Table</span></summary>
@@ -536,7 +539,7 @@ Data breakpoints are valid for one debug session only and must be reset after ea
 Set the `launch.json` parameter **paragraphBreakpoints** to "true" to trigger a breakpoint at the beginning of every new paragraph in COBOL code, and every label in Assembler code. For more information, see **[Configure a Debug Session](#configure-a-debug-session)**.
 
 You can also turn this feature on and off in the debugger console by submitting the commands `/AT LABEL` and `/LABEL OFF`.
-   </details>
+</details>
 
 <details>
 <summary id="logpoints"><span style="font-size: 1.3em">Logpoints</span></summary>
@@ -556,7 +559,7 @@ Logpoints are especially useful as:
 - They allow live analysis while users continue to use functionaility, minimizing costly downtime.
 - Logpoints can be added on an ad-hoc basis, with no need to pre-plan, so debugging can be done flexibly according to resource availability.
 - Logpoint notes are separate from source code, and require minimal clean-up after debugging is completed.
-   </details>
+</details>
 
 <details>
 <summary id="execution-counts"><span style="font-size: 1.3em">Execution Counts</span></summary>
@@ -568,8 +571,8 @@ The execution count feature is disabled by default. It can be enabled in `launch
 To enable or disable the execution count feature during your debug session, use the debug console commands `/counts on` and `/counts off`. After you submit the `/counts on` command, perform an action which progresses the debugging session to display the execution count.
 
 The execution count variable is stored on the mainframe and is only reset when you perform an action which progresses the debugging session. It is not reset by the `/counts off` command or by closing Visual Studio Code.
-   </details>
-   </details>
+</details>
+</details>
 
 <details>
 <summary id="variables"><span style="font-size: 1.5em"><b>Variables</b></span><hr></summary>
@@ -591,7 +594,7 @@ Variables in the tree view are sorted under the following categories:
   * (COBOL only, CICS only) Shows the value of all variables defined in the CICS region where your debug session is running.
 * **General Purpose Registers**
   * (Assembler only) Shows the content of all 16 General Purpose Registers.
-   </details>
+</details>
 
 <details>
 <summary id="filter-variables"><span style="font-size: 1.3em">Filter Variables</span></summary>
@@ -599,7 +602,7 @@ Variables in the tree view are sorted under the following categories:
 To find a variable in the variables tree view, click the **Filter** icon and type a search string in the text box at the top of the interface. The search returns all variables which contain the provided string. To clear an active filter, click the **Filter** icon.
 
 The filter searches variable names under the **Global** and **CICS Defined Variables** headings only.
-   </details>
+</details>
 
 <details>
 <summary id="edit-the-hexadecimal-value-of-a-variable"><span style="font-size: 1.3em">Edit the Hexadecimal Value of a Variable</span></summary>
@@ -611,7 +614,7 @@ To edit the hexadecimal value of a variable, do the following:
 3. Enter the hexadecimal value in the format <b>0x<i>value</i></b> and press enter.
 
 You can hover over a variable with an invalid format in the edit window to view the hexadecimal value.
-   </details>
+</details>
 
 <details>
 <summary id="enable-inline-variables-view"><span style="font-size: 1.3em">Enable Inline Variables View</span></summary>
@@ -624,8 +627,8 @@ To enable and disable inline variables view, use the following commands in the d
 
 * `/inline on`, `/inline off`
     - Enables and disables inline variables view.
-   </details>
-   </details>
+</details>
+</details>
 
 <details>
 <summary id="tracing"><span style="font-size: 1.5em"><b>Tracing</b></span><hr></summary>
@@ -652,7 +655,7 @@ To disable or enable the tracing features during your debug session, use the fol
     - Enables and disables statement trace.
 * `/calltrace on`, `/calltrace off`
     - Enables and disables call trace.
-   </details>
+</details>
 
 <details>
 <summary id="integrate-with-zowe-explorer"><span style="font-size: 1.5em"><b>Integrate with Zowe Explorer</b></span><hr></summary>
@@ -664,9 +667,10 @@ To enable job status messages, the **zoweProfileName** parameter must be specifi
 Zowe Explorer is available as part of the Code4z Foundation pack.
 
 <a href="https://www.openmainframeproject.org/all-projects/zowe/conformance"><img alt="This extension is Zowe v3 conformant" src="https://artwork.openmainframeproject.org/other/zowe-conformant/zowev3/explorer-vs-code/color/zowe-conformant-zowev3-explorer-vs-code-color.png" width=20% height=20% /></a>
-   </details>
 
-   <details>
+</details>
+
+<details>
 <summary id="troubleshooting"><span style="font-size: 1.5em"><b>Troubleshooting</b></span><hr></summary>
 
 To generate a troubleshooting log, add the following parameters to your `launch.json` file:
@@ -694,7 +698,8 @@ To generate a troubleshooting log, add the following parameters to your `launch.
 <summary id="reportissues"><span style="font-size: 1.5em"><b>Report Issues</b></span><hr></summary>
 
 How can we improve Debugger for Mainframe? [Let us know on our Git repository](https://github.com/BroadcomMFD/debugger-for-mainframe/issues)
-   </details>
+
+</details>
 
 <details>
 <summary id="technical-assistance-and-support"><span style="font-size: 1.5em"><b>Technical Assistance and Support</b></span><hr></summary>
@@ -713,9 +718,9 @@ This support generally includes:
 * Technical support cases must be submitted to Broadcom in accordance with guidance provided in “Working with Support”.
 
 Note: To receive technical assistance and support, you must remain compliant with “Working with Support”, be current on all applicable licensing and maintenance requirements, and maintain an environment in which all computer hardware, operating systems, and third party software associated with the affected Broadcom software are on the releases and version levels from the manufacturer that Broadcom designates as compatible with the software. Changes you elect to make to your operating environment could detrimentally affect the performance of Broadcom software and Broadcom shall not be responsible for these effects or any resulting degradation in performance of the Broadcom software. Severity 1 cases must be opened via telephone and elevations of lower severity incidents to Severity 1 status must be requested via telephone.
-   </details>
+</details>
 
-   <details>
+<details>
 <summary id="privacy-notice"><span style="font-size: 1.5em"><b>Privacy Notice</b></span><hr></summary>
 
 The extensions for Visual Studio Code developed by Broadcom Inc., including its corporate affiliates and subsidiaries, ("Broadcom") are provided free of charge, but in order to better understand and meet its users’ needs, Broadcom may collect, use, analyze and retain anonymous users’ metadata and interaction data, (collectively, “Usage Data”) and aggregate such Usage Data with similar Usage Data of other Broadcom customers. Please find more detailed information in License and Service Terms & Repository.
@@ -738,4 +743,4 @@ Each such event is logged with the following information:
 - Country or region
 - Anonymous user and session ID
 - Version numbers of Microsoft VS Code and Debugger for Mainframe
-   </details>
+</details>
